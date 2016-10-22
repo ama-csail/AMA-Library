@@ -1,4 +1,4 @@
-package edu.mit.dig.ama.vision;
+package edu.mit.dig.ama.features.vision;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-# Accessibility of Mobile Application (AMA)
+# Accessibility of Mobile Applications (AMA)
 
 AMA is a resource, testing framework, tool, and library for creating accessible Android applications.
 

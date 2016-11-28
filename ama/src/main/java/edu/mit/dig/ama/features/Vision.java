@@ -1,4 +1,4 @@
-package edu.mit.dig.ama.features.vision;
+package edu.mit.dig.ama.features;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
  * @author Aaron Vontell, Billy Caruso, Byungkyu Park
  * @version 10.22.16
  */
-public class Features {
+public class Vision {
 
     private static final String TALKBACK_PACKAGE = "com.google.android.marvin.talkback";
 

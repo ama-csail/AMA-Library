@@ -12,6 +12,8 @@ import android.view.accessibility.AccessibilityManager;
 
 import java.util.List;
 
+import edu.mit.dig.ama.core.ScreenType;
+
 import static android.content.Context.ACCESSIBILITY_SERVICE;
 
 /**

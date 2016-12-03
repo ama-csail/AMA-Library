@@ -11,6 +11,6 @@ package edu.mit.dig.ama.core;
 
 public enum ScreenType {
 
-    
+
 
 }

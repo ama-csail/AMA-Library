@@ -9,7 +9,7 @@ import java.util.Map;
 import edu.mit.dig.ama.core.ActionClass;
 
 /**
- * Limited Cognition related accessibility helper functions.
+ * Limited cognition related accessibility helper functions.
  * @author William Caruso
  * @author Byungkyu Park
  * @author Aaron Vontell
@@ -23,7 +23,7 @@ public class Cognition {
      * @param view The view to set the helpMessage on
      * @param helpMessage The string to set
      */
-    public void setHelpMessage(View view, String helpMessage) {
+    public static void setHelpMessage(View view, String helpMessage) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -33,7 +33,7 @@ public class Cognition {
      * @param view The view to get the HelpMessage on
      * @return The String HelpMessage of the view
      */
-    public String getHelpMessage(View view) {
+    public static String getHelpMessage(View view) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -50,7 +50,7 @@ public class Cognition {
      *                 - ActionClass.DANGER
      *                 - ActionClass.LINK
      */
-    public void setActionClass(View view, ActionClass actionClass) {
+    public static void setActionClass(View view, ActionClass actionClass) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -67,7 +67,7 @@ public class Cognition {
      *                 - ActionClass.DANGER
      *                 - ActionClass.LINK
      */
-    public ActionClass getActionClass(View view) {
+    public static ActionClass getActionClass(View view) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -77,7 +77,7 @@ public class Cognition {
      * @param activity The activity to check
      * @return the number of views
      */
-    public int getNumViews(Activity activity) {
+    public static int getNumViews(Activity activity) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -87,7 +87,7 @@ public class Cognition {
      * @param activity The activity to check
      * @return an ArrayList of views
      */
-    public ArrayList<View> getAllViews(Activity activity) {
+    public static ArrayList<View> getAllViews(Activity activity) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -97,7 +97,7 @@ public class Cognition {
      * @param activity The activity to check
      * @return an ArrayList of Strings
      */
-    public ArrayList<String> getAllStrings(Activity activity) {
+    public static ArrayList<String> getAllStrings(Activity activity) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -107,7 +107,7 @@ public class Cognition {
      * @param activity The activity to check
      * @return an ArrayList of complex Strings
      */
-    public ArrayList<String> getAllComplexStrings(Activity activity) {
+    public static ArrayList<String> getAllComplexStrings(Activity activity) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -117,7 +117,7 @@ public class Cognition {
      * Activity
      * @param strings A Map of complex Strings and simple strings
      */
-    public void setSimpleStringAlternatives(Map strings) {
+    public static void setSimpleStringAlternatives(Map strings) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -127,7 +127,7 @@ public class Cognition {
      * @param view The view to set
      * @param feedbackMessage String to set
      */
-    public void setFeedbackMessage(View view, String feedbackMessage) {
+    public static void setFeedbackMessage(View view, String feedbackMessage) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -136,7 +136,7 @@ public class Cognition {
      * Gets action feedback for a View
      * @param view The view to get the feedbackMessage from
      */
-    public void getFeedbackMessage(View view){
+    public static void getFeedbackMessage(View view){
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -146,7 +146,7 @@ public class Cognition {
      * @param paragraph The String to break down
      * @return bulleted version of paragraph
      */
-    public String getBullettedString(String paragraph){
+    public static String getBullettedString(String paragraph){
         //TODO
         throw new RuntimeException("Method not implemented");
     }

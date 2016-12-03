@@ -17,7 +17,7 @@ import edu.mit.dig.ama.core.ScreenType;
 import static android.content.Context.ACCESSIBILITY_SERVICE;
 
 /**
- * Class with methods for limited vision accessibility features
+ * Methods for limited vision accessibility features
  * @author Aaron Vontell
  * @author Billy Caruso
  * @author Byungkyu Park

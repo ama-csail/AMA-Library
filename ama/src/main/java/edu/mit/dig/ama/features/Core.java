@@ -2,6 +2,7 @@ package edu.mit.dig.ama.features;
 
 import android.app.Activity;
 
+
 /**
  * A collection of core features which may be used within
  * different accessibility settings.

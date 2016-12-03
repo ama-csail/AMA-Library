@@ -2,11 +2,13 @@ package edu.mit.dig.ama.features;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 import edu.mit.dig.ama.core.ActionClass;
+import edu.mit.dig.ama.core.Constants;
 
 /**
  * Limited cognition related accessibility helper functions.
@@ -51,7 +53,14 @@ public class Cognition {
      *                 - ActionClass.LINK
      */
     public static void setActionClass(View view, ActionClass actionClass) {
-        //TODO
+
+        view.setTag(Constants.ACTION_CLASS_KEY, actionClass);
+
+        // adjust view based on actionClass
+        if(view instanceof Button) {
+            view.setBackgroundColor(Constants.ACTION_BACKGROUND_COLOR.get(actionClass));
+        }
+
         throw new RuntimeException("Method not implemented");
     }
 
@@ -68,8 +77,12 @@ public class Cognition {
      *                 - ActionClass.LINK
      */
     public static ActionClass getActionClass(View view) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+
+        if (view.getTag(Constants.ACTION_CLASS_KEY) != null) {
+            return (ActionClass) view.getTag(Constants.ACTION_CLASS_KEY);
+        } else {
+            return ActionClass.DEFAULT;
+        }
     }
 
     /**

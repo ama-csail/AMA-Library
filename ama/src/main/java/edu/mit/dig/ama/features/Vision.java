@@ -13,8 +13,10 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
 
 /**
  * Class with methods for limited vision accessibility features
- * @author Aaron Vontell, Billy Caruso, Byungkyu Park
- * @version 10.22.16
+ * @author Aaron Vontell
+ * @author Billy Caruso
+ * @author Byungkyu Park
+ * @version 12.3.16
  */
 public class Vision {
 

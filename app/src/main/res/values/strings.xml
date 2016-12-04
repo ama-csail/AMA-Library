@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AMAExample</string>
+
+    <string name="accessible_edit_hint">Input string here &#8230;</string>
+    <string name="string_is_accessible">Input string is accessible!</string>
+    <string name="string_not_accessible">Input string is not accessible!</string>
+
 </resources>

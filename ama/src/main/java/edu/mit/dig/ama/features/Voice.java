@@ -40,4 +40,17 @@ public class Voice {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
+
+    /**
+     * Returns true if the input string is deemed accessible, and can
+     * be read reliably by TalkBack
+     * @param input The string to test accessibility on
+     * @return true if input is accessible
+     */
+    public static boolean isStringAccessible(String input) {
+
+        return input.matches("^[a-zA-Z0-9]*$");
+
+    }
+
 }

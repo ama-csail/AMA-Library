@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AMA</string>
 
+    <!-- STRING CONSTANTS -->
+    <string name="action_class_tag">ACTION_CLASS_TAG</string>
+
     <string name="orientation_change_landscape">Orientation is now landscape</string>
     <string name="orientation_change_portrait">Orientation is now portrait</string>
 

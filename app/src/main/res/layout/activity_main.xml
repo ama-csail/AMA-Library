@@ -21,11 +21,29 @@
         android:id="@+id/accessible_input_edit"
         android:hint="@string/accessible_edit_hint" />
 
+    <Button
+        android:text="@string/button_clear_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/accessible_ind_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="16dp"
+        android:id="@+id/clear_button" />
+
+    <Button
+        android:text="@string/button_send_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/accessible_ind_text"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/send_button" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:id="@+id/accessible_ind_text"
         android:layout_below="@+id/accessible_input_edit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:id="@+id/accessible_ind_text" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -61,7 +61,6 @@ public class Cognition {
             view.setBackgroundColor(Constants.ACTION_BACKGROUND_COLOR.get(actionClass));
         }
 
-        throw new RuntimeException("Method not implemented");
     }
 
     /**

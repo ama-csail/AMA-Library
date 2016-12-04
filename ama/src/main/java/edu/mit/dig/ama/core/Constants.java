@@ -20,7 +20,7 @@ public class Constants {
     /**
      * Keys for view tags
      */
-    public static final int ACTION_CLASS_KEY = 1;
+    public static final int ACTION_CLASS_KEY = R.string.action_class_tag;
 
     /**
      * Background colors for ActionClasses

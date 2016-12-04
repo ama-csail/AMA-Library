@@ -118,12 +118,11 @@ public class Vision {
 
     /**
      * Causes TalkBack to speak the given string out loud
-     * @param context The context to call TalkBack from
+     * @param activity The activity to call TalkBack from
      * @param message The message to have TalkBack speak out loud
      */
-    public static void speak(Context context, String message) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void speak(Activity activity, String message) {
+        activity.findViewById(android.R.id.content).announceForAccessibility(message);
     }
 
     /**

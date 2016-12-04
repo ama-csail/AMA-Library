@@ -4,5 +4,8 @@
     <string name="accessible_edit_hint">Input string here &#8230;</string>
     <string name="string_is_accessible">Input string is accessible!</string>
     <string name="string_not_accessible">Input string is not accessible!</string>
+    <string name="button_clear_text">CLEAR</string>
+    <string name="button_send_text">SEND</string>
+    <string name="accessible_send_text">Accessible message sent</string>
 
 </resources>

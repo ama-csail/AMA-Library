@@ -1,22 +1,28 @@
 package edu.mit.dig.amaexample;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
+import edu.mit.dig.ama.core.ActionClass;
+import edu.mit.dig.ama.features.Cognition;
+import edu.mit.dig.ama.features.Vision;
 import edu.mit.dig.ama.features.Voice;
 
 /**
  * Main activity for the demo app of Accessiblity for Mobile Applications
  *
  * Features of this app:
- *      - Provides ActionClass button types
- *      - Custom TalkBack speaking
- *      - Check if a string is Accessible
- *      - Speak back when orientation changed
+ *      - Provides ActionClass button types (DONE)
+ *      - Custom TalkBack speaking (DONE)
+ *      - Check if a string is Accessible (DONE)
+ *      - Speak back when orientation changed (DONE)
  *
  * @author Aaron Vontell
  * @author William Caruso
@@ -24,6 +30,8 @@ import edu.mit.dig.ama.features.Voice;
  * @version 12.3.2016
  */
 public class MainActivity extends AccessibleAppCompatActivity {
+
+    private final Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
         super.onResume();
 
+        // Set accessible text change listener
         final EditText accessibleTest = (EditText) findViewById(R.id.accessible_input_edit);
         final TextView accessibleInd = (TextView) findViewById(R.id.accessible_ind_text);
 
@@ -64,6 +73,27 @@ public class MainActivity extends AccessibleAppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        // Set button classes
+        final Button clearButton = (Button) findViewById(R.id.clear_button);
+        final Button sendButton = (Button) findViewById(R.id.send_button);
+
+        Cognition.setActionClass(clearButton, ActionClass.DANGER);
+        Cognition.setActionClass(sendButton, ActionClass.SUCCESS);
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accessibleTest.setText("");
+            }
+        });
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Vision.speak(activity, getString(R.string.accessible_send_text));
             }
         });
 

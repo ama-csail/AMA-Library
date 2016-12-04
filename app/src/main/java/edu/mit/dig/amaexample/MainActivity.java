@@ -1,7 +1,8 @@
 package edu.mit.dig.amaexample;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 
 /**
  * Main activity for the demo app of Accessiblity for Mobile Applications
@@ -17,11 +18,15 @@ import android.os.Bundle;
  * @author Byungkyu Park
  * @version 12.3.2016
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AccessibleAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Enable the custom orientation changed listener
+        enableOrientationChangedListener(true);
+
     }
 }

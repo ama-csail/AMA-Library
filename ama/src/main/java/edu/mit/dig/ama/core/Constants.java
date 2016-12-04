@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.graphics.Color;
 
+import edu.mit.dig.ama.R;
 import edu.mit.dig.ama.core.ActionClass;
 
 /**
@@ -15,10 +16,15 @@ import edu.mit.dig.ama.core.ActionClass;
  * @version 12.3.2016
  */
 public class Constants {
-    // Keys for view tags
+
+    /**
+     * Keys for view tags
+     */
     public static final int ACTION_CLASS_KEY = 1;
 
-    // ActionClass constants
+    /**
+     * Background colors for ActionClasses
+     */
     public static final Map<ActionClass, Integer> ACTION_BACKGROUND_COLOR = new HashMap<ActionClass, Integer>(){{
         put(ActionClass.DEFAULT, Color.WHITE);
         put(ActionClass.PRIMARY, Color.BLUE);
@@ -28,5 +34,17 @@ public class Constants {
         put(ActionClass.DANGER, Color.RED);
         put(ActionClass.LINK, Color.WHITE);
     }};
+
+    /**
+     * String resource for text on changing the orientation to landscape
+     */
+    public static final int STRING_ORIENTATION_CHANGE_LANDSCAPE =
+            R.string.orientation_change_landscape;
+
+    /**
+     * String resource for text on changing the orienation to portrait
+     */
+    public static final int STRING_ORIENTATION_CHANGE_PORTRAIT =
+            R.string.orientation_change_portrait;
 
 }

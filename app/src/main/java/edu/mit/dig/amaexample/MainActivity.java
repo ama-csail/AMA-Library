@@ -80,8 +80,8 @@ public class MainActivity extends AccessibleAppCompatActivity {
         final Button clearButton = (Button) findViewById(R.id.clear_button);
         final Button sendButton = (Button) findViewById(R.id.send_button);
 
-        Cognition.setActionClass(clearButton, ActionClass.DANGER);
-        Cognition.setActionClass(sendButton, ActionClass.SUCCESS);
+        Cognition.setActionClass(this, clearButton, ActionClass.DANGER);
+        Cognition.setActionClass(this, sendButton, ActionClass.SUCCESS);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override

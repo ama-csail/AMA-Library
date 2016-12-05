@@ -42,6 +42,7 @@ public class Cognition {
 
     /**
      * Sets the ActionClass of a View
+     * @param activity The calling activity
      * @param view The view to set the ActionClass on
      * @param actionClass The ActionClass to set, which can be one of
      *                 - ActionClass.DEFAULT
@@ -52,13 +53,18 @@ public class Cognition {
      *                 - ActionClass.DANGER
      *                 - ActionClass.LINK
      */
-    public static void setActionClass(View view, ActionClass actionClass) {
+    public static void setActionClass(Activity activity, View view, ActionClass actionClass) {
 
         view.setTag(Constants.ACTION_CLASS_KEY, actionClass);
 
         // adjust view based on actionClass
         if(view instanceof Button) {
-            view.setBackgroundColor(Constants.ACTION_BACKGROUND_COLOR.get(actionClass));
+            view.setBackgroundResource(Constants.ACTION_BACKGROUND_COLOR.get(actionClass));
+            if(actionClass != ActionClass.DEFAULT) {
+                ((Button) view).setTextColor(activity.getResources().getColor(android.R.color.white));
+            } else {
+                ((Button) view).setTextColor(activity.getResources().getColor(android.R.color.black));
+            }
         }
 
     }

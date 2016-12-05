@@ -26,12 +26,12 @@ public class Constants {
      * Background colors for ActionClasses
      */
     public static final Map<ActionClass, Integer> ACTION_BACKGROUND_COLOR = new HashMap<ActionClass, Integer>(){{
-        put(ActionClass.DEFAULT, Color.WHITE);
-        put(ActionClass.PRIMARY, Color.BLUE);
-        put(ActionClass.SUCCESS, Color.GREEN);
-        put(ActionClass.INFO, Color.CYAN);
-        put(ActionClass.WARNING, Color.YELLOW);
-        put(ActionClass.DANGER, Color.RED);
+        put(ActionClass.DEFAULT, android.R.drawable.btn_default);
+        put(ActionClass.PRIMARY, R.color.action_class_primary);
+        put(ActionClass.SUCCESS, R.color.action_class_green);
+        put(ActionClass.INFO, R.color.action_class_info);
+        put(ActionClass.WARNING, R.color.action_class_warning);
+        put(ActionClass.DANGER, R.color.action_class_red);
         put(ActionClass.LINK, Color.WHITE);
     }};
 

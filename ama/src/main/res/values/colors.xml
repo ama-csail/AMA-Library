@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="action_class_white">#FFFFFF</color>
+    <color name="action_class_green">#5CB85C</color>
+    <color name="action_class_red">#D9534F</color>
+    <color name="action_class_info">#5BC0DE</color>
+    <color name="action_class_warning">#F0AD4E</color>
+    <color name="action_class_primary">#0275D8</color>
+
+</resources>

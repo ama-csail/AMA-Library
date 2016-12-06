@@ -49,7 +49,7 @@ public class Voice {
      */
     public static boolean isStringAccessible(String input) {
 
-        return input.matches("^[a-zA-Z0-9]*$");
+        return input != null && input.matches("^[a-zA-Z0-9]*$");
 
     }
 

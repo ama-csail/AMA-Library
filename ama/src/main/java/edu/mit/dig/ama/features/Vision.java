@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -90,19 +93,41 @@ public class Vision {
      * @return True if this app has an accessible name
      */
     public static boolean isHumanReadable(Context context) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+
+        PackageManager packageManager = context.getPackageManager();
+        String name = null;
+
+        try {
+            ApplicationInfo applicationInfo = packageManager
+                    .getApplicationInfo(context.getApplicationInfo().packageName, 0);
+            if(applicationInfo != null) {
+                name = packageManager.getApplicationLabel(applicationInfo).toString();
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {}
+
+        return Voice.isStringAccessible(name);
+
     }
 
     /**
-     * Disables any TalkBack interaction from the given view. This method should only be
+     * Disables any TalkBack interaction from the given views. This method should only be
      * used to disable TalkBack on decorations
-     * @param context The context that wishes to know the results
-     * @param view The view to remove audio prompts from
+     * @param views The views to remove audio prompts from
      */
-    public static void disableAudioPrompts(Context context, View view) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void disableAudioPrompts(View ... views) {
+        for(View v : views) {
+            v.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+        }
+    }
+
+    /**
+     * Enables TalkBack interaction from the given view.
+     * @param views The views to add audio prompts to
+     */
+    public static void enableAudioPrompts(View ... views) {
+        for(View v : views) {
+            v.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
     }
 
     /**
@@ -127,12 +152,15 @@ public class Vision {
 
     /**
      * Changes the font of each given view to the given font
-     * @param size The new font size of each view
+     * @param size The new font size of each view TODO: What units?
      * @param views A list of views to increase the size of
      */
-    public static void setFont(int size, View ... views) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void setFont(float size, View ... views) {
+        for(View v : views) {
+            if(v instanceof TextView) {
+                ((TextView) v).setTextSize(size);
+            }
+        }
     }
 
     /**

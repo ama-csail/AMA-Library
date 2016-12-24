@@ -23,6 +23,11 @@ public class Constants {
     public static final int ACTION_CLASS_KEY = R.string.action_class_tag;
 
     /**
+     * Package constants
+     */
+    public static final String TALKBACK_PACKAGE = "com.google.android.marvin.talkback";
+
+    /**
      * Background colors for ActionClasses
      */
     public static final Map<ActionClass, Integer> ACTION_BACKGROUND_COLOR = new HashMap<ActionClass, Integer>(){{

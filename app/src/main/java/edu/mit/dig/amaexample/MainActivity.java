@@ -9,11 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import edu.mit.dig.ama.core.AMA;
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 import edu.mit.dig.ama.core.ActionClass;
-import edu.mit.dig.ama.features.Cognition;
-import edu.mit.dig.ama.features.Vision;
-import edu.mit.dig.ama.features.Voice;
 
 /**
  * Main activity for the demo app of Accessiblity for Mobile Applications
@@ -61,7 +59,7 @@ public class MainActivity extends AccessibleAppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                boolean isAccessible = Voice.isStringAccessible(charSequence.toString());
+                boolean isAccessible = AMA.isStringAccessible(charSequence.toString());
                 if(isAccessible) {
                     accessibleInd.setText(getString(R.string.string_is_accessible));
                 } else {
@@ -80,8 +78,8 @@ public class MainActivity extends AccessibleAppCompatActivity {
         final Button clearButton = (Button) findViewById(R.id.clear_button);
         final Button sendButton = (Button) findViewById(R.id.send_button);
 
-        Cognition.setActionClass(this, clearButton, ActionClass.DANGER);
-        Cognition.setActionClass(this, sendButton, ActionClass.SUCCESS);
+        AMA.setActionClass(this, clearButton, ActionClass.DANGER);
+        AMA.setActionClass(this, sendButton, ActionClass.SUCCESS);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +91,7 @@ public class MainActivity extends AccessibleAppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Vision.speak(activity, getString(R.string.accessible_send_text));
+                AMA.speak(activity, getString(R.string.accessible_send_text));
             }
         });
 

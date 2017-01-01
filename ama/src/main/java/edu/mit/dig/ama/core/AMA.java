@@ -15,14 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
-
-import edu.mit.dig.ama.R;
 
 import static android.content.Context.ACCESSIBILITY_SERVICE;
 
@@ -215,8 +211,8 @@ public class AMA {
         // This integer represents 0xAARRGGBB
         int color1 = context.getResources().getColor(colorForeground);
         int color2 = context.getResources().getColor(colorBackground);
-        int[] oneARGB = new int[] {0x11000000 & color1, 0x110000 & color1, 0x1100 & color1, 0x11 & color1};
-        int[] twoARGB = new int[] {0x11000000 & color2, 0x110000 & color2, 0x1100 & color2, 0x11 & color2};
+        int[] oneARGB = new int[] {(0x11000000 & color1) >> 6, (0x110000 & color1) >> 4, (0x1100 & color1) >> 2, 0x11 & color1};
+        int[] twoARGB = new int[] {(0x11000000 & color2) >> 6, (0x110000 & color2) >> 4, (0x1100 & color2) >> 2, 0x11 & color2};
 
         // Calculation for relative luminance, as defined by https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
         float oneL = calcLuminance(oneARGB);

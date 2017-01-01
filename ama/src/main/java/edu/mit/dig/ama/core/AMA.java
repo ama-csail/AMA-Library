@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
@@ -178,12 +180,64 @@ public class AMA {
 
     /**
      * Assesses whether the given colors satisfy the 4.5:1 ratio for contrast
+     * Uses resources from W3 in calculations, especially from the following links:
+     * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+     * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+     * @param context The calling application
      * @param colorForeground The color resource in the front of the background
      * @param colorBackground The color resource of the background
      */
-    public static boolean statisfiesContrast(int colorForeground, int colorBackground) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static boolean statisfiesContrast(Context context, @ColorRes int colorForeground, @ColorRes int colorBackground) {
+
+        double contrast = getContrast(context, colorForeground, colorBackground);
+        return contrast >= 4.5;
+
+    }
+
+    /**
+     * Returns the contrast of the given foreground and background colors, ranging from 1 to 21
+     * Uses resources from W3 in calculations, especially from the following links:
+     * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+     * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+     * @param context The calling application
+     * @param colorForeground The color resource in the front of the background
+     * @param colorBackground The color resource of the background
+     */
+    public static double getContrast(Context context, @ColorRes int colorForeground, @ColorRes int colorBackground) {
+
+        // Get the RGB values of each color
+        // This integer represents 0xAARRGGBB
+        int color1 = context.getResources().getColor(colorForeground);
+        int color2 = context.getResources().getColor(colorBackground);
+        int[] oneARGB = new int[] {0x11000000 & color1, 0x110000 & color1, 0x1100 & color1, 0x11 & color1};
+        int[] twoARGB = new int[] {0x11000000 & color2, 0x110000 & color2, 0x1100 & color2, 0x11 & color2};
+
+        // Calculation for relative luminance, as defined by https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+        float oneL = calcLuminance(oneARGB);
+        float twoL = calcLuminance(twoARGB);
+
+        return oneL > twoL ? (oneL + 0.05) / (twoL + 0.05) : (twoL + 0.05) / (oneL + 0.05);
+
+    }
+
+    /**
+     * Calculates the luminance of an ARGB color, as given by the equations at
+     * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+     * @param comps The ARGB components of the color
+     * @return a value to be used in contrast calculations
+     */
+    private static float calcLuminance(int[] comps) {
+
+        float RSRGB = comps[1] / 255f;
+        float GSRGB = comps[2] / 255f;
+        float BSRGB = comps[3] / 255f;
+        float R = RSRGB <= 0.03928 ? RSRGB / 12.92f : (float) Math.pow((RSRGB + 0.055) / 1.055f, 2.4);
+        float G = GSRGB <= 0.03928 ? GSRGB / 12.92f : (float) Math.pow((GSRGB + 0.055) / 1.055f, 2.4);
+        float B = BSRGB <= 0.03928 ? BSRGB / 12.92f : (float) Math.pow((BSRGB + 0.055) / 1.055f, 2.4);
+        float luminance = 0.2126f * R + 0.7152f * G + 0.0722f * B;
+
+        return luminance;
+
     }
 
     //endregion

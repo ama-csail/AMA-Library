@@ -552,23 +552,52 @@ public class AMA {
     }
 
     /**
-     * Gets all the Views on an Activity
+     * Gets all the Views on an Activity (note that this does not include ViewGroups)
      * @param activity The activity to check
      * @return an ArrayList of views
      */
-    public static ArrayList<View> getAllViews(Activity activity) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static List<View> getAllViews(Activity activity) {
+
+        View topView = activity.findViewById(android.R.id.content);
+        Queue<View> queue = new LinkedList<>();
+        List<View> views = new ArrayList<>();
+        queue.add(topView);
+
+        // Iterate through view in the queue
+        while (queue.size() > 0) {
+            View popped = queue.remove();
+            if (popped instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) popped;
+                for (int i = 0; i < group.getChildCount(); i++) {
+                    queue.add(group.getChildAt(i));
+                }
+            } else {
+                views.add(popped);
+            }
+        }
+
+        return views;
+
     }
 
     /**
-     * Gets all the Strings associated with an Activity
+     * Gets all the Strings associated with an Activity. These are the strings that
+     * are currently present within TextViews in this layout
      * @param activity The activity to check
-     * @return an ArrayList of Strings
+     * @return an ArrayList of Strings that are active in this layout
      */
-    public static ArrayList<String> getAllStrings(Activity activity) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static List<String> getAllStrings(Activity activity) {
+
+        List<View> views = getAllViews(activity);
+        List<String> strings = new ArrayList<>();
+        for (View view : views) {
+            if (view instanceof TextView) {
+                strings.add(((TextView) view).getText().toString());
+            }
+        }
+
+        return strings;
+
     }
 
     /**

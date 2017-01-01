@@ -9,13 +9,20 @@ import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+import edu.mit.dig.ama.R;
 
 import static android.content.Context.ACCESSIBILITY_SERVICE;
 
@@ -136,13 +143,15 @@ public class AMA {
 
     /**
      * Switches the content view of this activity to another layout when TalkBack is enabled
+     * Note that you may need multiple TalkBack layouts in different screen type folders, in
+     * case the user has an unexpected screen size or is in, say, landscape mode.
      * @param activity The activity to set an alternative layout
      * @param layout The layout resource for the accessible layout
-     * @param screenType The ScreenType to use, which can be one of: TODO
      */
-    public static void setTalkBackLayout(Activity activity, @LayoutRes int layout, ScreenType screenType) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void setTalkBackLayout(Activity activity, @LayoutRes int layout) {
+        if (isTalkBackEnabled(activity)) {
+            activity.setContentView(layout);
+        }
     }
 
     /**
@@ -187,10 +196,8 @@ public class AMA {
      * @param colorBackground The color resource of the background
      */
     public static boolean statisfiesContrast(Context context, @ColorRes int colorForeground, @ColorRes int colorBackground) {
-
         double contrast = getContrast(context, colorForeground, colorBackground);
         return contrast >= 4.5;
-
     }
 
     /**
@@ -277,7 +284,7 @@ public class AMA {
 
     /**
      * Returns true if the input string is deemed accessible, and can
-     * be read reliably by TalkBack
+     * be read reliably by TalkBack TODO: Make this better
      * @param input The string to test accessibility on
      * @return true if input is accessible
      */
@@ -514,13 +521,34 @@ public class AMA {
     }
 
     /**
-     * Gets the number of Views within an Activity
+     * Gets the number of Views within an Activity, by traversing through the view hierarchy
+     * Note that an activity with no views still has one view (the main content view)
      * @param activity The activity to check
      * @return the number of views
      */
     public static int getNumViews(Activity activity) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+
+        View topView = activity.findViewById(android.R.id.content);
+        Queue<View> queue = new LinkedList<>();
+        queue.add(topView);
+
+        int viewCount = 0;
+
+        // Iterate through view in the queue
+        while (queue.size() > 0) {
+            View popped = queue.remove();
+            if (popped instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) popped;
+                for (int i = 0; i < group.getChildCount(); i++) {
+                    queue.add(group.getChildAt(i));
+                }
+            } else {
+                viewCount++; // This is a View with no children
+            }
+        }
+
+        return viewCount;
+
     }
 
     /**

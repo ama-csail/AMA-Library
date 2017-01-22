@@ -280,6 +280,9 @@ public class AMA {
     /**
      * Returns true if the input string is deemed accessible, and can
      * be read reliably by TalkBack TODO: Make this better
+     * Essentially checks if a string is composed of solely letters,
+     * punctuation, whitespace, and numbers (no special characters such as
+     * emojis)
      * @param input The string to test accessibility on
      * @return true if input is accessible
      */

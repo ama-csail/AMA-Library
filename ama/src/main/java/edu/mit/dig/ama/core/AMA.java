@@ -87,10 +87,8 @@ public class AMA {
      */
     public static Intent getTalkBackPlayIntent() {
 
-        Intent talkbackIntent = new Intent(Intent.ACTION_VIEW,
+        return new Intent(Intent.ACTION_VIEW,
                 Uri.parse("market://details?id=" + Constants.TALKBACK_PACKAGE));
-
-        return talkbackIntent;
 
     }
 
@@ -225,8 +223,9 @@ public class AMA {
     /**
      * Calculates the luminance of an ARGB color, as given by the equations at
      * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-     * @param comps The ARGB components of the color
-     * @return a value to be used in contrast calculations
+     * @param comps The ARGB components of the color (from 0 to 255)
+     *              comps[0] = alpha, [1] = red, [2] = green, [3] = blue
+     * @return the luminance to be used in contrast calculations
      */
     private static float calcLuminance(int[] comps) {
 
@@ -286,7 +285,14 @@ public class AMA {
      */
     public static boolean isStringAccessible(String input) {
 
-        return input != null && input.matches("^[a-zA-Z0-9]*$");
+        if(input != null) {
+
+            input = input.trim();
+            return input.matches("[A-Za-z0-9,;'\".?!\\s]+");
+
+        } else {
+            return false;
+        }
 
     }
 

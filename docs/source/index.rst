@@ -3,18 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Accessibility for Mobile Applications's documentation!
+Accessibility for Mobile Applications
 =================================================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   AMA
+   AMATypes
 
-
-Indices and tables
+Welcome to AMA!
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+if you are reading this documentation, then you have taken the first step towards creating beautiful and effective applications which are accessible to all mobile application users.

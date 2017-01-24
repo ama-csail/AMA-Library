@@ -42,6 +42,7 @@ public class AMA {
      * @param context The calling activity
      * @return true if TalkBack is installed on this device
      */
+
     public static boolean isTalkBackInstalled(Context context) {
 
         List<ApplicationInfo> packages;

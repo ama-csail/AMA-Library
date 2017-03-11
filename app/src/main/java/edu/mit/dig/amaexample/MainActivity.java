@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
 import edu.mit.dig.ama.core.AMA;
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 import edu.mit.dig.ama.core.ActionClass;
@@ -92,9 +94,11 @@ public class MainActivity extends AccessibleAppCompatActivity {
             @Override
             public void onClick(View view) {
                 AMA.speak(activity, getString(R.string.accessible_send_text));
+
             }
         });
 
+        AMA.setViewsToGraycasle(this);
     }
 
 }

@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -168,6 +173,70 @@ public class AMA {
             if(v instanceof TextView) {
                 ((TextView) v).setTextSize(size);
             }
+        }
+    }
+
+    /**
+     * Sets all views to grayscale color
+     */
+    public static void setViewsToGraycasle(Activity activity) {
+        List<View> views = getAllViewsAndGroups(activity);
+        for (View view : views) {
+            toGrayscale(activity, view, GrayscaleType.AVERAGE);
+        }
+    }
+
+
+    /**
+     * Sets the primary color of this view to the grayscale version of the current color
+     * @param view The view to change with a color
+     * @return The view modified with the grayscale color
+     */
+    public static View toGrayscale(Activity activity, View view, GrayscaleType gType) {
+
+        if (view instanceof Button) {
+            int color = ((Button) view).getCurrentTextColor();
+            ((Button) view).setTextColor(colorToGrayscale(color, gType));
+            ((Button) view).setBackgroundResource(android.R.drawable.btn_default);
+        } else if (view instanceof TextView) {
+            int color = ((TextView) view).getCurrentTextColor();
+            ((TextView) view).setTextColor(colorToGrayscale(color, gType));
+        } else if (view instanceof ImageView) {
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0);
+            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+            ((ImageView) view).setColorFilter(filter);
+        } else if (view instanceof ViewGroup) {
+            // do nothing
+        } else {
+            int color = 0;
+            Drawable background = view.getBackground();
+            if (background instanceof ColorDrawable) {
+                color = ((ColorDrawable) background).getColor();
+                ((ColorDrawable) background).setColor(colorToGrayscale(color, gType));
+            }
+        }
+        return view;
+    }
+
+    /**
+     * Converts an integer color value to the grayscale color equivalent based on the gType
+     * https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/
+     * @param color The color to change
+     * @param gType The grayscale transformation to perform
+     * @return The grayscale color
+     */
+    private static int colorToGrayscale(int color, GrayscaleType gType) {
+        int[] ARGB = new int[] {(0x11000000 & color) >> 6, (0x110000 & color) >> 4, (0x1100 & color) >> 2, 0x11 & color};
+        switch (gType) {
+            case AVERAGE:
+                return (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
+            case LIGHTNESS:
+                return Math.max(ARGB[1], Math.max(ARGB[2], ARGB[3])) + Math.min(ARGB[1], Math.min(ARGB[2], ARGB[3]))/ 2;
+            case LUMINOSITY:
+                return (int) (0.21*ARGB[1] + 0.72*ARGB[2] + 0.07*ARGB[3]);
+            default:
+                return color;
         }
     }
 
@@ -585,6 +654,34 @@ public class AMA {
         return views;
 
     }
+
+    /**
+     * Gets all the Views on an Activity (note that this does include ViewGroups)
+     * @param activity The activity to check
+     * @return an ArrayList of views
+     */
+    public static List<View> getAllViewsAndGroups(Activity activity) {
+
+        View topView = activity.findViewById(android.R.id.content);
+        Queue<View> queue = new LinkedList<>();
+        List<View> views = new ArrayList<>();
+        queue.add(topView);
+
+        // Iterate through view in the queue
+        while (queue.size() > 0) {
+            View popped = queue.remove();
+            if (popped instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) popped;
+                for (int i = 0; i < group.getChildCount(); i++) {
+                    queue.add(group.getChildAt(i));
+                }
+            }
+        }
+
+        return views;
+
+    }
+
 
     /**
      * Gets all the Strings associated with an Activity. These are the strings that

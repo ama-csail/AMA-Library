@@ -6,7 +6,7 @@ package edu.mit.dig.ama.core;
  * @author Aaron Vontell
  * @author William Caruso
  * @author Byungkyu Park
- * @version 12.3.2016
+ * @version 3.10.2017
  */
 public enum ScreenType {
 

@@ -77,9 +77,12 @@ public class MainActivity extends AccessibleAppCompatActivity {
         // Set button classes
         final Button clearButton = (Button) findViewById(R.id.clear_button);
         final Button sendButton = (Button) findViewById(R.id.send_button);
+        final Button increaseSpacingButton = (Button) findViewById(R.id.increase_margin_button);
+        increaseSpacingButton.setTag(1);
 
         AMA.setActionClass(this, clearButton, ActionClass.DANGER);
         AMA.setActionClass(this, sendButton, ActionClass.SUCCESS);
+        AMA.setActionClass(this, increaseSpacingButton, ActionClass.PRIMARY);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +97,22 @@ public class MainActivity extends AccessibleAppCompatActivity {
                 AMA.speak(activity, getString(R.string.accessible_send_text));
             }
         });
+
+        increaseSpacingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if((Integer) view.getTag() == 1) {
+                    increaseSpacingButton.setTag(2);
+                    increaseSpacingButton.setText(R.string.button_increse_margin_decrease_text);
+                    AMA.increaseSpacing(100, AMA.getAllViews(activity));
+                } else {
+                    increaseSpacingButton.setTag(1);
+                    increaseSpacingButton.setText(R.string.button_increse_margin_text);
+                    AMA.increaseSpacing(-100, AMA.getAllViews(activity));
+                }
+            }
+        });
+
 
     }
 

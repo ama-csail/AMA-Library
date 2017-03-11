@@ -175,9 +175,12 @@ public class AMA {
      * @param space The additional margin of each view
      * @param views A list of views to increase the spacing of
      */
-    public static void increaseSpacing(int space, View ... views) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void increaseSpacing(int space, List<View> views) {
+        for(View v : views) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+            v.setLayoutParams(params);
+        }
     }
 
     /**
@@ -584,6 +587,7 @@ public class AMA {
         return views;
 
     }
+
 
     /**
      * Gets all the Strings associated with an Activity. These are the strings that

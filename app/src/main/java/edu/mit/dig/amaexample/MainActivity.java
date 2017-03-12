@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.List;
-
 import edu.mit.dig.ama.core.AMA;
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 import edu.mit.dig.ama.core.ActionClass;
@@ -79,9 +77,11 @@ public class MainActivity extends AccessibleAppCompatActivity {
         // Set button classes
         final Button clearButton = (Button) findViewById(R.id.clear_button);
         final Button sendButton = (Button) findViewById(R.id.send_button);
+        final Button convertButton = (Button) findViewById(R.id.convert_button);
 
         AMA.setActionClass(this, clearButton, ActionClass.DANGER);
         AMA.setActionClass(this, sendButton, ActionClass.SUCCESS);
+        AMA.setActionClass(this, convertButton, ActionClass.SUCCESS);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override

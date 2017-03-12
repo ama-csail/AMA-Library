@@ -46,4 +46,21 @@
         android:id="@+id/accessible_ind_text"
         android:layout_below="@+id/accessible_input_edit"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="But hitherto the emotion had remained in him as a silent ache, veiling with sadness the beauty that evoked it. He did not even know whether any one else in the world felt as he did, or whether he was the sole victim of this mournful privilege."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clear_button"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp"
+        android:id="@+id/textView" />
+
+    <Button
+        android:text="Convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/convert_button" />
 </RelativeLayout>

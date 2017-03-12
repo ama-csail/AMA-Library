@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.mit.dig.ama.core.AMA;
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 import edu.mit.dig.ama.core.ActionClass;
@@ -79,10 +82,12 @@ public class MainActivity extends AccessibleAppCompatActivity {
         final Button sendButton = (Button) findViewById(R.id.send_button);
         final Button increaseSpacingButton = (Button) findViewById(R.id.increase_margin_button);
         increaseSpacingButton.setTag(1);
+        final Button convertButton = (Button) findViewById(R.id.convert_button);
 
         AMA.setActionClass(this, clearButton, ActionClass.DANGER);
         AMA.setActionClass(this, sendButton, ActionClass.SUCCESS);
         AMA.setActionClass(this, increaseSpacingButton, ActionClass.PRIMARY);
+        AMA.setActionClass(this, convertButton, ActionClass.SUCCESS);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +119,17 @@ public class MainActivity extends AccessibleAppCompatActivity {
         });
 
 
+        convertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map<String,String> stringHashMap = new HashMap<>();
+                stringHashMap.put("hitherto", "before");
+                stringHashMap.put("veiling", "surrounding");
+                stringHashMap.put("sole", "only");
+                stringHashMap.put("mournful", "sad");
+                AMA.setSimpleStringAlternatives(activity, stringHashMap);
+            }
+        });
     }
 
 }

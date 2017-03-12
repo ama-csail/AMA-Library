@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -32,6 +33,14 @@ import edu.mit.dig.ama.core.ActionClass;
 public class MainActivity extends AccessibleAppCompatActivity {
 
     private final Activity activity = this;
+    private TextView title;
+    private TextView paragraph;
+    private ImageView image;
+    private Button grayBtn;
+    private Button simpleBtn;
+
+    private boolean isGrayScale = false;
+    private boolean isSimple = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,57 +57,68 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
         super.onResume();
 
-        // Set accessible text change listener
-        final EditText accessibleTest = (EditText) findViewById(R.id.accessible_input_edit);
-        final TextView accessibleInd = (TextView) findViewById(R.id.accessible_ind_text);
+        // Grab each element of our activity
+        title = (TextView) findViewById(R.id.title);
+        paragraph = (TextView) findViewById(R.id.paragraph);
+        image = (ImageView) findViewById(R.id.article_image);
+        simpleBtn = (Button) findViewById(R.id.simple_btn);
+        grayBtn = (Button) findViewById(R.id.grayscale_btn);
 
-        accessibleTest.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                boolean isAccessible = AMA.isStringAccessible(charSequence.toString());
-                if(isAccessible) {
-                    accessibleInd.setText(getString(R.string.string_is_accessible));
-                } else {
-                    accessibleInd.setText(getString(R.string.string_not_accessible));
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        // Set button classes
-        final Button clearButton = (Button) findViewById(R.id.clear_button);
-        final Button sendButton = (Button) findViewById(R.id.send_button);
-
-        AMA.setActionClass(this, clearButton, ActionClass.DANGER);
-        AMA.setActionClass(this, sendButton, ActionClass.SUCCESS);
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
+        // Set the listeners for each button
+        simpleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accessibleTest.setText("");
+                makeActivitySimple();
             }
         });
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        grayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AMA.speak(activity, getString(R.string.accessible_send_text));
-
+                makeActivityGrayscale();
             }
         });
+
+
 
         AMA.setViewsToGraycasle(this);
+    }
+
+    /**
+     * Makes the activity grayscale (text, background, and images)
+     */
+    private void makeActivityGrayscale() {
+
+        if(!isGrayScale) {
+
+            grayBtn.setText(getString(R.string.grayscale_btn_on));
+            isGrayScale = true;
+
+        } else {
+
+            grayBtn.setText(getString(R.string.grayscale_btn_off));
+            isGrayScale = false;
+
+        }
+
+    }
+
+    /**
+     * Replaces all strings with simpler versions
+     */
+    private void makeActivitySimple() {
+
+        if(!isSimple) {
+
+            simpleBtn.setText(getString(R.string.simple_btn_on));
+            isSimple = true;
+
+        } else {
+
+            simpleBtn.setText(getString(R.string.simple_btn_off));
+            isSimple = false;
+
+        }
+
     }
 
 }

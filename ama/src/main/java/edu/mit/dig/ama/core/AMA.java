@@ -11,13 +11,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,7 +40,8 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
  * @author Aaron Vontell
  * @author William Caruso
  * @author Byungkyu Park
- * @version 0.0.1
+ * @author Metin Say
+ * @version 0.0.2
  */
 public class AMA {
 
@@ -181,7 +187,7 @@ public class AMA {
     /**
      * Sets all views to grayscale color
      */
-    public static void setViewsToGraycasle(Activity activity) {
+    public static void setViewsToGrayscale(Activity activity) {
         List<View> views = getAllViewsAndGroups(activity);
         for (View view : views) {
             toGrayscale(activity, view, GrayscaleType.AVERAGE);
@@ -197,9 +203,10 @@ public class AMA {
     public static View toGrayscale(Activity activity, View view, GrayscaleType gType) {
 
         if (view instanceof Button) {
-            int color = ((Button) view).getCurrentTextColor();
-            ((Button) view).setTextColor(colorToGrayscale(color, gType));
-            ((Button) view).setBackgroundResource(android.R.drawable.btn_default);
+            // TODO: Find out best way to do this
+            //int color = ((Button) view).getCurrentTextColor();
+            //((Button) view).setTextColor(colorToGrayscale(color, gType));
+            //((Button) view).setBackgroundResource(android.);
         } else if (view instanceof TextView) {
             int color = ((TextView) view).getCurrentTextColor();
             ((TextView) view).setTextColor(colorToGrayscale(color, gType));
@@ -208,13 +215,10 @@ public class AMA {
             matrix.setSaturation(0);
             ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
             ((ImageView) view).setColorFilter(filter);
-        } else if (view instanceof ViewGroup) {
-            // do nothing
         } else {
-            int color = 0;
             Drawable background = view.getBackground();
             if (background instanceof ColorDrawable) {
-                color = ((ColorDrawable) background).getColor();
+                int color = ((ColorDrawable) background).getColor();
                 ((ColorDrawable) background).setColor(colorToGrayscale(color, gType));
             }
         }
@@ -232,7 +236,9 @@ public class AMA {
         int[] ARGB = new int[] {(0x11000000 & color) >> 6, (0x110000 & color) >> 4, (0x1100 & color) >> 2, 0x11 & color};
         switch (gType) {
             case AVERAGE:
-                return (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
+                int scale = (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
+                int result = (ARGB[0] << 6) + (scale << 4) + (scale << 2) + (scale);
+                return result;
             case LIGHTNESS:
                 return Math.max(ARGB[1], Math.max(ARGB[2], ARGB[3])) + Math.min(ARGB[1], Math.min(ARGB[2], ARGB[3]))/ 2;
             case LUMINOSITY:
@@ -248,10 +254,29 @@ public class AMA {
      * @param views A list of views to increase the spacing of
      */
     public static void increaseSpacing(int space, List<View> views) {
+        Log.e("INC", "" + views.size());
         for(View v : views) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
-            v.setLayoutParams(params);
+
+            // Check the parent for the corrent params to use
+            ViewParent parent = v.getParent();
+
+            if(parent == null) {
+                continue;
+            }
+
+            if(parent instanceof RelativeLayout) {
+
+                RelativeLayout.MarginLayoutParams params = (RelativeLayout.MarginLayoutParams) v.getLayoutParams();
+                params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+                v.setLayoutParams(params);
+
+            } else if (parent instanceof LinearLayout) {
+
+                LinearLayout.MarginLayoutParams params = (LinearLayout.MarginLayoutParams) v.getLayoutParams();
+                params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+                v.setLayoutParams(params);
+
+            }
         }
     }
 
@@ -676,11 +701,14 @@ public class AMA {
         // Iterate through view in the queue
         while (queue.size() > 0) {
             View popped = queue.remove();
+            views.add(popped);
             if (popped instanceof ViewGroup) {
                 ViewGroup group = (ViewGroup) popped;
                 for (int i = 0; i < group.getChildCount(); i++) {
                     queue.add(group.getChildAt(i));
                 }
+            } else {
+                views.add(popped);
             }
         }
 
@@ -730,16 +758,38 @@ public class AMA {
         for (View view : views) {
             if (view instanceof TextView) {
                 String text = ((TextView) view).getText().toString();
+
+                // Tracking for restoration
+                boolean simplified = false;
+                String copy = "" + text;
+
                 Set<String> stringKeySet = strings.keySet();
                 for (String stringKey : stringKeySet) {
                     if (text.contains(stringKey)) {
+                        simplified = true;
                         String[] textSplitArray = text.split(stringKey);
                         text = TextUtils.join(strings.get(stringKey).toString(), textSplitArray);
                     }
                 }
                 ((TextView) view).setText(text);
+                if(simplified) {Store.saveViewString(view, copy);}
             }
         }
+    }
+
+    /**
+     * Restores all changes made by <code>setSimpleStringAlternatives()</code>
+     * @param activity The activity with the views to restore
+     */
+    public static void restoreSimpleStringAlternatives(Activity activity) {
+
+        List<View> views = getAllViews(activity);
+        for (View view : views) {
+            if (view instanceof TextView) {
+                Store.restoreString(view);
+            }
+        }
+
     }
 
     /**

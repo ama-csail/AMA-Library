@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">AMAExample</string>
+    <string name="app_name">Accessible Application</string>
 
-    <string name="accessible_edit_hint">Input string here &#8230;</string>
-    <string name="string_is_accessible">Input string is accessible!</string>
-    <string name="string_not_accessible">Input string is not accessible!</string>
-    <string name="button_clear_text">CLEAR</string>
-    <string name="button_send_text">SEND</string>
-    <string name="accessible_send_text">Accessible message sent</string>
+    <string name="article_title">Welcome to AMA!</string>
+    <string name="article_paragraph">This is an example paragraph with some complex text. The UI of this application should be quite accessible to any user, and it also just looks amazing too.</string>
+    <string name="grayscale_btn_on">Grayscale On</string>
+    <string name="grayscale_btn_off">Grayscale Off</string>
+    <string name="simple_btn_on">Simple On</string>
+    <string name="simple_btn_off">Simple Off</string>
+    <string name="increase_space_btn">Inc. Spacing</string>
+    <string name="decrease_space_btn">Dec. Spacing</string>
 
 </resources>

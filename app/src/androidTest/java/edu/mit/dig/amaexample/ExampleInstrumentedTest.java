@@ -23,4 +23,5 @@ public class ExampleInstrumentedTest {
 
         assertEquals("edu.mit.dig.amaexample", appContext.getPackageName());
     }
+
 }

@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.util.Log;
@@ -186,7 +187,7 @@ public class AMA {
     /**
      * Sets all views to grayscale color
      */
-    public static void setViewsToGraycasle(Activity activity) {
+    public static void setViewsToGrayscale(Activity activity) {
         List<View> views = getAllViewsAndGroups(activity);
         for (View view : views) {
             toGrayscale(activity, view, GrayscaleType.AVERAGE);
@@ -202,9 +203,10 @@ public class AMA {
     public static View toGrayscale(Activity activity, View view, GrayscaleType gType) {
 
         if (view instanceof Button) {
-            int color = ((Button) view).getCurrentTextColor();
-            ((Button) view).setTextColor(colorToGrayscale(color, gType));
-            ((Button) view).setBackgroundResource(android.R.drawable.btn_default);
+            // TODO: Find out best way to do this
+            //int color = ((Button) view).getCurrentTextColor();
+            //((Button) view).setTextColor(colorToGrayscale(color, gType));
+            //((Button) view).setBackgroundResource(android.);
         } else if (view instanceof TextView) {
             int color = ((TextView) view).getCurrentTextColor();
             ((TextView) view).setTextColor(colorToGrayscale(color, gType));
@@ -213,13 +215,10 @@ public class AMA {
             matrix.setSaturation(0);
             ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
             ((ImageView) view).setColorFilter(filter);
-        } else if (view instanceof ViewGroup) {
-            // do nothing
         } else {
-            int color = 0;
             Drawable background = view.getBackground();
             if (background instanceof ColorDrawable) {
-                color = ((ColorDrawable) background).getColor();
+                int color = ((ColorDrawable) background).getColor();
                 ((ColorDrawable) background).setColor(colorToGrayscale(color, gType));
             }
         }
@@ -237,7 +236,9 @@ public class AMA {
         int[] ARGB = new int[] {(0x11000000 & color) >> 6, (0x110000 & color) >> 4, (0x1100 & color) >> 2, 0x11 & color};
         switch (gType) {
             case AVERAGE:
-                return (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
+                int scale = (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
+                int result = (ARGB[0] << 6) + (scale << 4) + (scale << 2) + (scale);
+                return result;
             case LIGHTNESS:
                 return Math.max(ARGB[1], Math.max(ARGB[2], ARGB[3])) + Math.min(ARGB[1], Math.min(ARGB[2], ARGB[3]))/ 2;
             case LUMINOSITY:
@@ -255,8 +256,6 @@ public class AMA {
     public static void increaseSpacing(int space, List<View> views) {
         Log.e("INC", "" + views.size());
         for(View v : views) {
-
-
 
             // Check the parent for the corrent params to use
             ViewParent parent = v.getParent();
@@ -702,11 +701,14 @@ public class AMA {
         // Iterate through view in the queue
         while (queue.size() > 0) {
             View popped = queue.remove();
+            views.add(popped);
             if (popped instanceof ViewGroup) {
                 ViewGroup group = (ViewGroup) popped;
                 for (int i = 0; i < group.getChildCount(); i++) {
                     queue.add(group.getChildAt(i));
                 }
+            } else {
+                views.add(popped);
             }
         }
 

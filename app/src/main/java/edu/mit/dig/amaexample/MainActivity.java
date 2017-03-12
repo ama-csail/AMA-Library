@@ -116,6 +116,7 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
             grayBtn.setText(getString(R.string.grayscale_btn_on));
             isGrayScale = true;
+            AMA.setViewsToGrayscale(this);
 
         } else {
 

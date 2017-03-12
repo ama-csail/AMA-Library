@@ -2,19 +2,16 @@ package edu.mit.dig.amaexample;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.mit.dig.ama.core.AMA;
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
-import edu.mit.dig.ama.core.ActionClass;
 
 /**
  * Main activity for the demo app of Accessiblity for Mobile Applications
@@ -38,6 +35,7 @@ public class MainActivity extends AccessibleAppCompatActivity {
     private ImageView image;
     private Button grayBtn;
     private Button simpleBtn;
+    private Map<String, String> simpleMappings;
 
     private boolean isGrayScale = false;
     private boolean isSimple = false;
@@ -49,6 +47,11 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
         // Enable the custom orientation changed listener
         enableOrientationChangedListener(true);
+
+        simpleMappings = new HashMap<>();
+        simpleMappings.put("complex", "simple");
+        simpleMappings.put("UI", "user interface");
+        simpleMappings.put("quite", "very");
 
     }
 
@@ -78,9 +81,6 @@ public class MainActivity extends AccessibleAppCompatActivity {
             }
         });
 
-
-
-        AMA.setViewsToGraycasle(this);
     }
 
     /**
@@ -111,11 +111,13 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
             simpleBtn.setText(getString(R.string.simple_btn_on));
             isSimple = true;
+            AMA.setSimpleStringAlternatives(this, simpleMappings);
 
         } else {
 
             simpleBtn.setText(getString(R.string.simple_btn_off));
             isSimple = false;
+            AMA.restoreSimpleStringAlternatives(this);
 
         }
 

@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
@@ -24,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import static android.content.Context.ACCESSIBILITY_SERVICE;
 
@@ -33,7 +35,8 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
  * @author Aaron Vontell
  * @author William Caruso
  * @author Byungkyu Park
- * @version 0.0.1
+ * @author Metin Say
+ * @version 0.0.2
  */
 public class AMA {
 
@@ -245,9 +248,12 @@ public class AMA {
      * @param space The additional margin of each view
      * @param views A list of views to increase the spacing of
      */
-    public static void increaseSpacing(int space, View ... views) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void increaseSpacing(int space, List<View> views) {
+        for(View v : views) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+            v.setLayoutParams(params);
+        }
     }
 
     /**
@@ -655,6 +661,7 @@ public class AMA {
 
     }
 
+
     /**
      * Gets all the Views on an Activity (note that this does include ViewGroups)
      * @param activity The activity to check
@@ -716,11 +723,46 @@ public class AMA {
     /**
      * Sets all the simple Strings associated with complex Strings in an
      * Activity
+     * @param activity The activity
      * @param strings A Map of complex Strings and simple strings
      */
-    public static void setSimpleStringAlternatives(Map strings) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void setSimpleStringAlternatives(Activity activity, Map strings) {
+        List<View> views = getAllViews(activity);
+        for (View view : views) {
+            if (view instanceof TextView) {
+                String text = ((TextView) view).getText().toString();
+
+                // Tracking for restoration
+                boolean simplified = false;
+                String copy = "" + text;
+
+                Set<String> stringKeySet = strings.keySet();
+                for (String stringKey : stringKeySet) {
+                    if (text.contains(stringKey)) {
+                        simplified = true;
+                        String[] textSplitArray = text.split(stringKey);
+                        text = TextUtils.join(strings.get(stringKey).toString(), textSplitArray);
+                    }
+                }
+                ((TextView) view).setText(text);
+                if(simplified) {Store.saveViewString(view, copy);}
+            }
+        }
+    }
+
+    /**
+     * Restores all changes made by <code>setSimpleStringAlternatives()</code>
+     * @param activity The activity with the views to restore
+     */
+    public static void restoreSimpleStringAlternatives(Activity activity) {
+
+        List<View> views = getAllViews(activity);
+        for (View view : views) {
+            if (view instanceof TextView) {
+                Store.restoreString(view);
+            }
+        }
+
     }
 
     /**

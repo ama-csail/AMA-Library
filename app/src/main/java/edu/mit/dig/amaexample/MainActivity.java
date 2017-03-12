@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.mit.dig.ama.core.AMA;
@@ -35,7 +37,10 @@ public class MainActivity extends AccessibleAppCompatActivity {
     private ImageView image;
     private Button grayBtn;
     private Button simpleBtn;
+    private Button incSpaceBtn;
+    private Button decSpaceBtn;
     private Map<String, String> simpleMappings;
+    private List<View> spacingViews;
 
     private boolean isGrayScale = false;
     private boolean isSimple = false;
@@ -66,6 +71,15 @@ public class MainActivity extends AccessibleAppCompatActivity {
         image = (ImageView) findViewById(R.id.article_image);
         simpleBtn = (Button) findViewById(R.id.simple_btn);
         grayBtn = (Button) findViewById(R.id.grayscale_btn);
+        incSpaceBtn = (Button) findViewById(R.id.inc_space_btn);
+        decSpaceBtn = (Button) findViewById(R.id.dec_space_btn);
+
+        spacingViews = new ArrayList<>();
+        spacingViews.add(title);
+        spacingViews.add(image);
+        spacingViews.add(paragraph);
+        spacingViews.add(grayBtn);
+        spacingViews.add(simpleBtn);
 
         // Set the listeners for each button
         simpleBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +92,18 @@ public class MainActivity extends AccessibleAppCompatActivity {
             @Override
             public void onClick(View view) {
                 makeActivityGrayscale();
+            }
+        });
+        incSpaceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AMA.increaseSpacing(10, spacingViews);
+            }
+        });
+        decSpaceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AMA.increaseSpacing(-10, spacingViews);
             }
         });
 

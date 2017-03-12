@@ -7,5 +7,7 @@
     <string name="grayscale_btn_off">Grayscale Off</string>
     <string name="simple_btn_on">Simple On</string>
     <string name="simple_btn_off">Simple Off</string>
+    <string name="increase_space_btn">Inc. Spacing</string>
+    <string name="decrease_space_btn">Dec. Spacing</string>
 
 </resources>

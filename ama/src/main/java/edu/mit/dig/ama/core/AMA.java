@@ -13,11 +13,15 @@ import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -249,10 +253,31 @@ public class AMA {
      * @param views A list of views to increase the spacing of
      */
     public static void increaseSpacing(int space, List<View> views) {
+        Log.e("INC", "" + views.size());
         for(View v : views) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
-            v.setLayoutParams(params);
+
+
+
+            // Check the parent for the corrent params to use
+            ViewParent parent = v.getParent();
+
+            if(parent == null) {
+                continue;
+            }
+
+            if(parent instanceof RelativeLayout) {
+
+                RelativeLayout.MarginLayoutParams params = (RelativeLayout.MarginLayoutParams) v.getLayoutParams();
+                params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+                v.setLayoutParams(params);
+
+            } else if (parent instanceof LinearLayout) {
+
+                LinearLayout.MarginLayoutParams params = (LinearLayout.MarginLayoutParams) v.getLayoutParams();
+                params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+                v.setLayoutParams(params);
+
+            }
         }
     }
 

@@ -36,7 +36,7 @@
         android:layout_below="@+id/article_image"
         android:layout_alignParentStart="true"
         android:id="@+id/paragraph"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:textSize="18sp"/>
 
     <LinearLayout
@@ -67,7 +67,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <Button
             android:text="@string/grayscale_btn_off"
@@ -85,6 +85,32 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/simple_btn"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <Button
+            android:text="@string/increase_space_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/inc_space_btn"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="@string/decrease_space_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/dec_space_btn"
             android:layout_weight="1"/>
 
     </LinearLayout>

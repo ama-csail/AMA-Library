@@ -5,13 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import static android.content.Context.ACCESSIBILITY_SERVICE;
 
@@ -28,7 +40,8 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
  * @author Aaron Vontell
  * @author William Caruso
  * @author Byungkyu Park
- * @version 0.0.1
+ * @author Metin Say
+ * @version 0.0.2
  */
 public class AMA {
 
@@ -172,13 +185,99 @@ public class AMA {
     }
 
     /**
+     * Sets all views to grayscale color
+     */
+    public static void setViewsToGrayscale(Activity activity) {
+        List<View> views = getAllViewsAndGroups(activity);
+        for (View view : views) {
+            toGrayscale(activity, view, GrayscaleType.AVERAGE);
+        }
+    }
+
+
+    /**
+     * Sets the primary color of this view to the grayscale version of the current color
+     * @param view The view to change with a color
+     * @return The view modified with the grayscale color
+     */
+    public static View toGrayscale(Activity activity, View view, GrayscaleType gType) {
+
+        if (view instanceof Button) {
+            // TODO: Find out best way to do this
+            //int color = ((Button) view).getCurrentTextColor();
+            //((Button) view).setTextColor(colorToGrayscale(color, gType));
+            //((Button) view).setBackgroundResource(android.);
+        } else if (view instanceof TextView) {
+            int color = ((TextView) view).getCurrentTextColor();
+            ((TextView) view).setTextColor(colorToGrayscale(color, gType));
+        } else if (view instanceof ImageView) {
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0);
+            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+            ((ImageView) view).setColorFilter(filter);
+        } else {
+            Drawable background = view.getBackground();
+            if (background instanceof ColorDrawable) {
+                int color = ((ColorDrawable) background).getColor();
+                ((ColorDrawable) background).setColor(colorToGrayscale(color, gType));
+            }
+        }
+        return view;
+    }
+
+    /**
+     * Converts an integer color value to the grayscale color equivalent based on the gType
+     * https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/
+     * @param color The color to change
+     * @param gType The grayscale transformation to perform
+     * @return The grayscale color
+     */
+    private static int colorToGrayscale(int color, GrayscaleType gType) {
+        int[] ARGB = new int[] {(0x11000000 & color) >> 6, (0x110000 & color) >> 4, (0x1100 & color) >> 2, 0x11 & color};
+        switch (gType) {
+            case AVERAGE:
+                int scale = (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
+                int result = (ARGB[0] << 6) + (scale << 4) + (scale << 2) + (scale);
+                return result;
+            case LIGHTNESS:
+                return Math.max(ARGB[1], Math.max(ARGB[2], ARGB[3])) + Math.min(ARGB[1], Math.min(ARGB[2], ARGB[3]))/ 2;
+            case LUMINOSITY:
+                return (int) (0.21*ARGB[1] + 0.72*ARGB[2] + 0.07*ARGB[3]);
+            default:
+                return color;
+        }
+    }
+
+    /**
      * Increases the margin of each given view by the given amount
      * @param space The additional margin of each view
      * @param views A list of views to increase the spacing of
      */
-    public static void increaseSpacing(int space, View ... views) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void increaseSpacing(int space, List<View> views) {
+        Log.e("INC", "" + views.size());
+        for(View v : views) {
+
+            // Check the parent for the corrent params to use
+            ViewParent parent = v.getParent();
+
+            if(parent == null) {
+                continue;
+            }
+
+            if(parent instanceof RelativeLayout) {
+
+                RelativeLayout.MarginLayoutParams params = (RelativeLayout.MarginLayoutParams) v.getLayoutParams();
+                params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+                v.setLayoutParams(params);
+
+            } else if (parent instanceof LinearLayout) {
+
+                LinearLayout.MarginLayoutParams params = (LinearLayout.MarginLayoutParams) v.getLayoutParams();
+                params.setMargins(params.leftMargin, params.topMargin + space, params.rightMargin, params.bottomMargin);
+                v.setLayoutParams(params);
+
+            }
+        }
     }
 
     /**
@@ -586,6 +685,38 @@ public class AMA {
 
     }
 
+
+    /**
+     * Gets all the Views on an Activity (note that this does include ViewGroups)
+     * @param activity The activity to check
+     * @return an ArrayList of views
+     */
+    public static List<View> getAllViewsAndGroups(Activity activity) {
+
+        View topView = activity.findViewById(android.R.id.content);
+        Queue<View> queue = new LinkedList<>();
+        List<View> views = new ArrayList<>();
+        queue.add(topView);
+
+        // Iterate through view in the queue
+        while (queue.size() > 0) {
+            View popped = queue.remove();
+            views.add(popped);
+            if (popped instanceof ViewGroup) {
+                ViewGroup group = (ViewGroup) popped;
+                for (int i = 0; i < group.getChildCount(); i++) {
+                    queue.add(group.getChildAt(i));
+                }
+            } else {
+                views.add(popped);
+            }
+        }
+
+        return views;
+
+    }
+
+
     /**
      * Gets all the Strings associated with an Activity. These are the strings that
      * are currently present within TextViews in this layout
@@ -619,11 +750,46 @@ public class AMA {
     /**
      * Sets all the simple Strings associated with complex Strings in an
      * Activity
+     * @param activity The activity
      * @param strings A Map of complex Strings and simple strings
      */
-    public static void setSimpleStringAlternatives(Map strings) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static void setSimpleStringAlternatives(Activity activity, Map strings) {
+        List<View> views = getAllViews(activity);
+        for (View view : views) {
+            if (view instanceof TextView) {
+                String text = ((TextView) view).getText().toString();
+
+                // Tracking for restoration
+                boolean simplified = false;
+                String copy = "" + text;
+
+                Set<String> stringKeySet = strings.keySet();
+                for (String stringKey : stringKeySet) {
+                    if (text.contains(stringKey)) {
+                        simplified = true;
+                        String[] textSplitArray = text.split(stringKey);
+                        text = TextUtils.join(strings.get(stringKey).toString(), textSplitArray);
+                    }
+                }
+                ((TextView) view).setText(text);
+                if(simplified) {Store.saveViewString(view, copy);}
+            }
+        }
+    }
+
+    /**
+     * Restores all changes made by <code>setSimpleStringAlternatives()</code>
+     * @param activity The activity with the views to restore
+     */
+    public static void restoreSimpleStringAlternatives(Activity activity) {
+
+        List<View> views = getAllViews(activity);
+        for (View view : views) {
+            if (view instanceof TextView) {
+                Store.restoreString(view);
+            }
+        }
+
     }
 
     /**

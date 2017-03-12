@@ -51,7 +51,6 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@color/action_class_red">
-
         </FrameLayout>
 
         <FrameLayout

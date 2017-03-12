@@ -1,6 +1,5 @@
 package edu.mit.dig.amaexample;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,19 +18,18 @@ import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
  * Main activity for the demo app of Accessiblity for Mobile Applications
  *
  * Features of this app:
- *      - Provides ActionClass button types (DONE)
- *      - Custom TalkBack speaking (DONE)
- *      - Check if a string is Accessible (DONE)
- *      - Speak back when orientation changed (DONE)
+ *      - Grayscale filtering
+ *      - Increased spacing for visual clarity
+ *      - Complex string replacement for congitive ease
  *
  * @author Aaron Vontell
  * @author William Caruso
  * @author Byungkyu Park
+ * @author Metin Say
  * @version 12.3.2016
  */
 public class MainActivity extends AccessibleAppCompatActivity {
 
-    private final Activity activity = this;
     private TextView title;
     private TextView paragraph;
     private ImageView image;

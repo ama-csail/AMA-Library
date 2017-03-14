@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AMA-Library.iml" filepath="$PROJECT_DIR$/AMA-Library.iml" />
       <module fileurl="file://$PROJECT_DIR$/AMAExample.iml" filepath="$PROJECT_DIR$/AMAExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/accessibility.iml" filepath="$PROJECT_DIR$/accessibility.iml" />
       <module fileurl="file://$PROJECT_DIR$/ama/ama.iml" filepath="$PROJECT_DIR$/ama/ama.iml" />

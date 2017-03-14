@@ -114,13 +114,13 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
         if(!isGrayScale) {
 
-            grayBtn.setText(getString(R.string.grayscale_btn_on));
+            grayBtn.setText(getString(R.string.grayscale_btn_off));
             isGrayScale = true;
             AMA.setViewsToGrayscale(this);
 
         } else {
 
-            grayBtn.setText(getString(R.string.grayscale_btn_off));
+            grayBtn.setText(getString(R.string.grayscale_btn_on));
             isGrayScale = false;
 
         }

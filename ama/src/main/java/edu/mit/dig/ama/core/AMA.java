@@ -190,7 +190,7 @@ public class AMA {
     public static void setViewsToGrayscale(Activity activity) {
         List<View> views = getAllViewsAndGroups(activity);
         for (View view : views) {
-            toGrayscale(activity, view, GrayscaleType.AVERAGE);
+            viewsToGrayscale(activity, view, GrayscaleType.AVERAGE);
         }
     }
 
@@ -200,7 +200,7 @@ public class AMA {
      * @param view The view to change with a color
      * @return The view modified with the grayscale color
      */
-    public static View toGrayscale(Activity activity, View view, GrayscaleType gType) {
+    public static View viewsToGrayscale(Activity activity, View view, GrayscaleType gType) {
 
         if (view instanceof Button) {
             // TODO: Find out best way to do this
@@ -209,6 +209,7 @@ public class AMA {
             //((Button) view).setBackgroundResource(android.);
         } else if (view instanceof TextView) {
             int color = ((TextView) view).getCurrentTextColor();
+            Log.e("UHOH", Integer.toHexString(color));
             ((TextView) view).setTextColor(colorToGrayscale(color, gType));
         } else if (view instanceof ImageView) {
             ColorMatrix matrix = new ColorMatrix();
@@ -233,16 +234,16 @@ public class AMA {
      * @return The grayscale color
      */
     private static int colorToGrayscale(int color, GrayscaleType gType) {
-        int[] ARGB = new int[] {(0x11000000 & color) >> 6, (0x110000 & color) >> 4, (0x1100 & color) >> 2, 0x11 & color};
+        int[] ARGB = new int[] {(0x11000000 & color) >> 24, (0x110000 & color) >> 16, (0x1100 & color) >> 8, 0x11 & color};
         switch (gType) {
             case AVERAGE:
                 int scale = (ARGB[1] + ARGB[2] + ARGB[3]) / 3;
-                int result = (ARGB[0] << 6) + (scale << 4) + (scale << 2) + (scale);
-                return result;
+                Log.e("BOOM", Integer.toHexString((ARGB[0] << 24) + (scale << 16) + (scale << 8) + (scale)));
+                return (ARGB[0] << 24) + (scale << 16) + (scale << 8) + (scale);
             case LIGHTNESS:
-                return Math.max(ARGB[1], Math.max(ARGB[2], ARGB[3])) + Math.min(ARGB[1], Math.min(ARGB[2], ARGB[3]))/ 2;
+                return Math.max(ARGB[1], Math.max(ARGB[2], ARGB[3])) + Math.min(ARGB[1], Math.min(ARGB[2], ARGB[3])) / 2;
             case LUMINOSITY:
-                return (int) (0.21*ARGB[1] + 0.72*ARGB[2] + 0.07*ARGB[3]);
+                return  (int) (0.21*ARGB[1] + 0.72*ARGB[2] + 0.07*ARGB[3]);
             default:
                 return color;
         }
@@ -309,8 +310,8 @@ public class AMA {
         // This integer represents 0xAARRGGBB
         int color1 = context.getResources().getColor(colorForeground);
         int color2 = context.getResources().getColor(colorBackground);
-        int[] oneARGB = new int[] {(0x11000000 & color1) >> 6, (0x110000 & color1) >> 4, (0x1100 & color1) >> 2, 0x11 & color1};
-        int[] twoARGB = new int[] {(0x11000000 & color2) >> 6, (0x110000 & color2) >> 4, (0x1100 & color2) >> 2, 0x11 & color2};
+        int[] oneARGB = new int[] {(0x11000000 & color1) >> 24, (0x110000 & color1) >> 16, (0x1100 & color1) >> 8, 0x11 & color1};
+        int[] twoARGB = new int[] {(0x11000000 & color2) >> 24, (0x110000 & color2) >> 16, (0x1100 & color2) >> 8, 0x11 & color2};
 
         // Calculation for relative luminance, as defined by https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
         float oneL = calcLuminance(oneARGB);

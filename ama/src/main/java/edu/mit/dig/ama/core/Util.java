@@ -1,8 +1,8 @@
 package edu.mit.dig.ama.core;
 
 /**
- * A collection of methods which are primarily utility for the library,
- * but may also be used by a developer if they find it useful
+ * A collection of methods and constants which are primarily utility for the AMA
+ * library, but may also be used by a developer if they find it useful
  * @author Aaron Vontell
  * @author William Caruso
  * @author Byungkyu Park
@@ -10,6 +10,6 @@ package edu.mit.dig.ama.core;
  */
 public class Util {
 
-
+    static final int HELP_MESSAGE_KEY = "AMA_HELP_MESSAGE_KEY".hashCode();
 
 }

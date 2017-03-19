@@ -557,23 +557,24 @@ public class AMA {
     //----------------------------------------------------------------------------------------------
 
     /**
-     * Sets the HelpMessage of a View
+     * Sets the HelpMessage of a View (essentially a piece of information
+     * which can be used in other operations)
      * @param view The view to set the helpMessage on
      * @param helpMessage The string to set
      */
     public static void setHelpMessage(View view, String helpMessage) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+        view.setTag(Util.HELP_MESSAGE_KEY, helpMessage);
     }
 
     /**
-     * Gets the HelpMessage of a View
+     * Gets the HelpMessage of a View (the piece of information set by
+     * <code>setHelpMessage()</code>)
      * @param view The view to get the HelpMessage on
-     * @return The String HelpMessage of the view
+     * @return The String HelpMessage of the view, or null if it does not exist
      */
     public static String getHelpMessage(View view) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+        Object help = view.getTag(Util.HELP_MESSAGE_KEY);
+        return (help == null ? null : (String) help);
     }
 
     /**

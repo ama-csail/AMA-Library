@@ -10,6 +10,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -359,13 +361,55 @@ public class AMA {
     }
 
     /**
-     * Get the current available input methods from the input field
-     * @param view the view to check upon
+     * Get the current available input methods
      * @param activity the Activity for specific input field
+     * @return list of string representing different types of input methods
      */
-    public static void getInputMethodsInInputFields(View view, Activity activity) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static String[] getAvailableInputMethods(Activity activity) {
+        String enabledMethods = Settings.Secure.getString(activity.getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS);
+        return enabledMethods.split(":");
+    }
+
+    /**
+     * Check if the voice typing is enabled for the phone
+     * @param enabledMethods list of string representing enabled methods
+     * @return boolean representing whether voice typing is enabled or not
+     */
+    public static boolean isVoiceTypingEnabled(String[] enabledMethods) {
+        for (String method: enabledMethods) {
+            if (method.contains("VoiceInputMethod")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get all the text input fields from the view.
+     * @param activity the Activity for specific input field
+     * @return list of text input fields existing on all views
+     */
+    public static List<View> getAllTextInputFields(Activity activity) {
+        List<View> views = getAllViews(activity);
+        List<View> inputFields = new ArrayList<>();
+        for (View view: views) {
+            if (view instanceof EditText) {
+                inputFields.add(view);
+            }
+        }
+        return inputFields;
+    }
+
+    /**
+     * Get the default input method for the activity
+     * @param activity current activity
+     * @return String representing the default input method
+     */
+    public static String getDefaultInputMethod(Activity activity) {
+        //activity.getApplicationContext()
+        String id;
+        id = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+        return id;
     }
 
     /**

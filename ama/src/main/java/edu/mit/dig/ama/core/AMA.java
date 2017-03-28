@@ -808,7 +808,7 @@ public class AMA {
      * Gets action feedback for a View
      * @param view The view to get the feedbackMessage from
      */
-    public static void getFeedbackMessage(View view){
+    public static void getFeedbackMessage(View view) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -818,7 +818,7 @@ public class AMA {
      * @param paragraph The String to break down
      * @return bulleted version of paragraph
      */
-    public static String getBullettedString(String paragraph){
+    public static String getBullettedString(String paragraph) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }

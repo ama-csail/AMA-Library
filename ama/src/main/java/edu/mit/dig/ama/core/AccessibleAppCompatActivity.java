@@ -3,6 +3,8 @@ package edu.mit.dig.ama.core;
 import android.app.Activity;
 import android.content.res.Configuration;
 
+import edu.mit.dig.ama.core.menu.MenuView;
+
 /**
  * An accessible library which provides accessible features which a developer can
  * enable.
@@ -14,6 +16,29 @@ import android.content.res.Configuration;
 public class AccessibleAppCompatActivity extends Activity {
 
     private boolean orientationChangedListenerEnabled;
+    private MenuView accessibleMenu;
+
+    /**
+     * Enable the accessibility menu for this activity (note that this enables
+     * any settings configured by the user within the activity)
+     */
+    public void enableMenu() {
+        if(accessibleMenu == null) {
+            accessibleMenu = MenuView.getMenu();
+        }
+        accessibleMenu.setEnabled(true);
+    }
+
+    /**
+     * Disable the accessibility menu for this activity (note that this disables
+     * any settings configured by the user within the activity)
+     */
+    public void disableMenu() {
+        if(accessibleMenu == null) {
+            accessibleMenu = MenuView.getMenu();
+        }
+        accessibleMenu.setEnabled(false);
+    }
 
     /**
      * Enables the orientation changed listener for this activity

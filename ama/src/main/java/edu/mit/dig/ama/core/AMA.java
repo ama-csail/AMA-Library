@@ -10,12 +10,14 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -523,6 +525,34 @@ public class AMA {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
+
+
+    /**
+     * Simulates a touch gesture at a specific location on a view
+     * @param view The view to touch
+     * @param x The x-coordinate of the touch
+     * @param y The y-coordinate of the touch
+     */
+    public static void simulateTouchGesture(View view, float x, float y) {
+        // Obtain MotionEvent object
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis() + 100;
+        // List of meta states found here:
+        // developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
+        int metaState = 0;
+        MotionEvent motionEvent = MotionEvent.obtain(
+                downTime,
+                eventTime,
+                MotionEvent.ACTION_UP,
+                x,
+                y,
+                metaState
+        );
+
+        // Dispatch touch event to view
+        view.dispatchTouchEvent(motionEvent);
+    }
+
 
     /**
      * Sets the input time for a View

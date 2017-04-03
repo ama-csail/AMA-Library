@@ -1,5 +1,7 @@
 package edu.mit.dig.ama.core.menu;
 
+import android.app.Activity;
+
 /**
  * An object which represents all configurations of the MenuView. Note that this
  * includes both user set options and developer set. The user options are set
@@ -15,8 +17,12 @@ public class MenuConfig {
     /** User options **/
     private boolean visible;
 
+    /** Constants **/
+    private final String GLOBAL_CONFIG = "ama_user_prefs";
+
     /**
-     * Creates a default configuration object for the MenuView
+     * Creates a default configuration object for the MenuView. Always attempts
+     * to
      */
     public MenuConfig() {
 
@@ -31,5 +37,27 @@ public class MenuConfig {
     }
 
     // PARAMETERS AND RULES FOR RETRIEVING AND STORING JSON REPS ---------------
+
+    public void saveAppConfig(Activity activity) {
+
+        String app = activity.getPackageName();
+
+    }
+
+    public void saveUserConfig() {
+
+    }
+
+    public void restoreConfigs() {
+
+    }
+
+    public void resetAppConfig() {
+
+    }
+
+    public void resetUserConfig() {
+
+    }
 
 }

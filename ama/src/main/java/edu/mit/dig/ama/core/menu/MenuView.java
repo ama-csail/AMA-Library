@@ -40,6 +40,14 @@ public class MenuView {
     }
 
     /**
+     * Returns the configuration for this menu
+     * @return the configuration for this menu
+     */
+    public MenuConfig getConfiguration() {
+        return configuration;
+    }
+
+    /**
      * If true, then the menu will be enabled for this applications
      * @param enabled true if the menu should be used (and settings shown)
      */

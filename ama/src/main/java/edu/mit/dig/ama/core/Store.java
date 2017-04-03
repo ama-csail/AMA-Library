@@ -43,5 +43,24 @@ public class Store {
 
     }
 
+    /**
+     * Stores text content into a file with the given absolute file name on the
+     * internal drive (with sharing enabled)
+     * @param file The absolute filename to save to
+     * @param content The contents to save to the file
+     */
+    public void storeString(String file, String content) {
+
+    }
+
+    /**
+     * Retrieves the string content from the given file on the internal drive
+     * @param file The absolute filename to retrieve from
+     * @return The contents of the file, or null if no file was accessed
+     */
+    public String getString(String file) {
+
+    }
+
 
 }

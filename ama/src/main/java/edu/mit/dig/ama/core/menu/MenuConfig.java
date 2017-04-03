@@ -44,6 +44,9 @@ public class MenuConfig {
 
     }
 
+    /**
+     * Calls the store
+     */
     public void saveUserConfig() {
 
     }

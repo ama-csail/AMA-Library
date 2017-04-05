@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 public class Store {
 
-    static final String LOG_TAG = "Store";
+    private static final String LOG_TAG = "Store";
     private static HashMap<View, String> originals = new HashMap<>();
 
     /**

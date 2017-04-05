@@ -148,4 +148,19 @@ public class MainActivity extends AccessibleAppCompatActivity {
 
     }
 
+    /**
+     * Writes the string to external storage
+     * @param view
+     */
+    public void writeExternalStorage(View view) {
+
+    }
+
+    /**
+     * Reads the string from external storage and displays it
+     * @param view
+     */
+    public void readExternalStorage(View view) {
+
+    }
 }

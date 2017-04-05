@@ -81,7 +81,7 @@ public class Store {
     }
 
     public File getObject(String fileName, Serializable obj) {
-        // TODO: get file is it is stored
+        // TODO: get file if it is stored
 
         // Check if the directory exists for the fileName
         // Get the directory for the user's public pictures directory.

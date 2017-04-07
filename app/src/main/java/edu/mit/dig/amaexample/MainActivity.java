@@ -1,5 +1,6 @@
 package edu.mit.dig.amaexample;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import edu.mit.dig.ama.core.AMA;
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
+import edu.mit.dig.ama.core.menu.MenuViewParser;
 
 /**
  * Main activity for the demo app of Accessiblity for Mobile Applications
@@ -29,6 +31,8 @@ import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
  * @version 12.3.2016
  */
 public class MainActivity extends AccessibleAppCompatActivity {
+
+    private Context context;
 
     private TextView title;
     private TextView paragraph;
@@ -55,6 +59,8 @@ public class MainActivity extends AccessibleAppCompatActivity {
         simpleMappings.put("complex", "simple");
         simpleMappings.put("UI", "user interface");
         simpleMappings.put("quite", "very");
+
+        this.context = this;
 
     }
 
@@ -83,7 +89,10 @@ public class MainActivity extends AccessibleAppCompatActivity {
         simpleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makeActivitySimple();
+                //makeActivitySimple();
+                checkDrawOverlayPermission();
+                MenuViewParser viewParser = new MenuViewParser(context, null);
+                viewParser.prepareMenu();
             }
         });
         grayBtn.setOnClickListener(new View.OnClickListener() {

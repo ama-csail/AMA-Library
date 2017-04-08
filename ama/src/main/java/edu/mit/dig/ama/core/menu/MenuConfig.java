@@ -1,6 +1,12 @@
 package edu.mit.dig.ama.core.menu;
 
 import android.app.Activity;
+import android.content.Context;
+
+import java.io.Serializable;
+
+import edu.mit.dig.ama.core.menu.services.MenuModule;
+import edu.mit.dig.ama.core.menu.services.navigation.NavigationMenuModule;
 
 /**
  * An object which represents all configurations of the MenuView. Note that this
@@ -17,15 +23,39 @@ public class MenuConfig {
     /** User options **/
     private boolean visible;
 
+    /** Library objects **/
+    private Context globalContext;
+
+    private NavigationMenuModule navigationMenuModule;
+
     /** Constants **/
-    private final String GLOBAL_CONFIG = "ama_user_prefs";
+    private final String USER_PREFS = "ama_user_prefs";
 
     /**
      * Creates a default configuration object for the MenuView. Always attempts
-     * to
+     * to load previous configurations from memory; otherwise, a new file is
+     * created
+     * @param globalContext The global / app level context (should not be an
+     *                      activity context, in case the activity changes). A
+     *                      non-global context can be used if
+     *                      <code>setContext()</code> is used on each new
+     *                      activity.
      */
-    public MenuConfig() {
+    public MenuConfig(Context globalContext) {
 
+        this.globalContext = globalContext;
+
+        this.navigationMenuModule = new NavigationMenuModule("App Navigation");
+
+        //TODO: load pre-existing preferences
+    }
+
+    /**
+     * Resets the context to be the given context
+     * @param context The new context for this menu
+     */
+    public void setContext(Context context) {
+        this.globalContext = context;
     }
 
     /**
@@ -36,7 +66,11 @@ public class MenuConfig {
         this.enabled = enabled;
     }
 
-    // PARAMETERS AND RULES FOR RETRIEVING AND STORING JSON REPS ---------------
+    public NavigationMenuModule getNavigationMenuModule() {
+        return this.navigationMenuModule;
+    }
+
+    // PARAMETERS AND RULES FOR RETRIEVING AND STORING CONFIGS -----------------
 
     public void saveAppConfig(Activity activity) {
 
@@ -60,6 +94,16 @@ public class MenuConfig {
     }
 
     public void resetUserConfig() {
+
+    }
+
+    // CLASS DEFINITIONS TO SEPARATE DEVELOPER AND USER OPTIONS ----------------
+
+    private class UserPreferences implements Serializable {
+
+    }
+
+    private class DeveloperOptions implements Serializable {
 
     }
 

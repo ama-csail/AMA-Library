@@ -9,6 +9,8 @@ import android.provider.Settings;
 
 import edu.mit.dig.ama.core.menu.MenuView;
 import edu.mit.dig.ama.core.menu.MenuViewParser;
+import edu.mit.dig.ama.core.menu.services.navigation.IntentEntry;
+import edu.mit.dig.ama.core.util.exceptions.MenuNotCreatedException;
 
 /**
  * An accessible library which provides accessible features which a developer can
@@ -29,7 +31,7 @@ public class AccessibleAppCompatActivity extends Activity {
      */
     public void enableMenu() {
         if(accessibleMenu == null) {
-            accessibleMenu = MenuView.getMenu();
+            accessibleMenu = MenuView.getMenu(this.getApplicationContext());
         }
         accessibleMenu.setEnabled(true);
     }
@@ -40,7 +42,7 @@ public class AccessibleAppCompatActivity extends Activity {
      */
     public void disableMenu() {
         if(accessibleMenu == null) {
-            accessibleMenu = MenuView.getMenu();
+            accessibleMenu = MenuView.getMenu(this.getApplicationContext());
         }
         accessibleMenu.setEnabled(false);
     }
@@ -110,6 +112,25 @@ public class AccessibleAppCompatActivity extends Activity {
                 }
             }
         }
+    }
+
+    // MODULE - SPECIFIC BINDINGS FOR THE MENU CONFIGURATION -------------------
+
+    /**
+     * Provides a sitemap to the navigation module of the accessibility menu
+     * @param title The title to display
+     * @param intentEntries
+     */
+    public void giveSitemap(String title, IntentEntry... intentEntries) {
+
+        if(accessibleMenu != null) {
+            accessibleMenu.getConfiguration()
+                    .getNavigationMenuModule()
+                    .setSitemap(title, intentEntries);
+        } else {
+            throw new MenuNotCreatedException();
+        }
+
     }
 
 }

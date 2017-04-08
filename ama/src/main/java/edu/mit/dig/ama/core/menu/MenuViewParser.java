@@ -1,10 +1,13 @@
 package edu.mit.dig.ama.core.menu;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.view.View;
 
+import edu.mit.dig.ama.core.menu.services.DefaultMenuAdapter;
 import io.mattcarroll.hover.HoverMenu;
 import io.mattcarroll.hover.Navigator;
+import io.mattcarroll.hover.NavigatorContent;
 import io.mattcarroll.hover.defaulthovermenu.HoverMenuBuilder;
 
 /**
@@ -35,24 +38,54 @@ public class MenuViewParser {
      */
     public void prepareMenu() {
 
+        // Build an adapter for the views
+        DefaultMenuAdapter adapter = buildDefaultMenuAdapter();
+        Navigator navigator = getMenuNavigator();
+
         // Build a HoverMenu.
         this.hoverMenu = new HoverMenuBuilder(context)
                 .displayWithinWindow()
-                //.useNavigator(myNavigator)
-                //.useAdapter(adapter)
+                .useNavigator(navigator)
+                .useAdapter(adapter)
                 .build();
 
-        hoverMenu.show();
-        hoverMenu.expandMenu();
+        //hoverMenu.show();
+        //hoverMenu.expandMenu();
 
     }
 
     public Navigator getMenuNavigator() {
-        return null;
+        return new Navigator() {
+            @Override
+            public void pushContent(@NonNull NavigatorContent content) {
+
+            }
+
+            @Override
+            public boolean popContent() {
+                return false;
+            }
+
+            @Override
+            public void clearContent() {
+
+            }
+
+            @NonNull
+            @Override
+            public View getView() {
+                return null;
+            }
+        };
     }
 
-    public void buildMenuAdapter() {
-
+    /**
+     * Returns the default menu adapter, which will be populated and constructed
+     * using the options and preferences within the used MenuConfig
+     * @return The default menu adapter for this menu
+     */
+    public DefaultMenuAdapter buildDefaultMenuAdapter() {
+        return new DefaultMenuAdapter(context, config);
     }
 
 }

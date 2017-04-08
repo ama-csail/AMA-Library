@@ -9,5 +9,6 @@
     <string name="simple_btn_off">Simple Off</string>
     <string name="increase_space_btn">Inc. Spacing</string>
     <string name="decrease_space_btn">Dec. Spacing</string>
+    <string name="title_activity_other">OtherActivity</string>
 
 </resources>

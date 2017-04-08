@@ -1,5 +1,7 @@
 package edu.mit.dig.ama.core.menu;
 
+import android.content.Context;
+
 /**
  * The core interface for the hoverable accessible menu view, which developers
  * and users can interact with to provide accessibility options to the user.
@@ -17,12 +19,13 @@ public class MenuView {
 
     /**
      * Returns the instance of the MenuView for manipulation and interaction
+     * @param context The context to load for the menu
      * @return the current MenuView
      */
-    public static MenuView getMenu() {
+    public static MenuView getMenu(Context context) {
 
         if(menuInstance == null) {
-            menuInstance = new MenuView();
+            menuInstance = new MenuView(context);
         }
         return menuInstance;
 
@@ -33,9 +36,11 @@ public class MenuView {
     private MenuConfig configuration;
 
     /**
-     * Creates a singleton MenuView
+     * Creates a singleton MenuView for the given context
      */
-    private MenuView() {
+    private MenuView(Context context) {
+
+        this.configuration = new MenuConfig(context);
 
     }
 

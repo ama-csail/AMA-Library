@@ -8,6 +8,8 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
+import java.util.Map;
+
 import edu.mit.dig.ama.core.menu.MenuView;
 import edu.mit.dig.ama.core.menu.MenuViewParser;
 import edu.mit.dig.ama.core.menu.services.navigation.IntentEntry;
@@ -134,6 +136,30 @@ public class AccessibleAppCompatActivity extends Activity {
             accessibleMenu.getConfiguration()
                     .getNavigationMenuModule()
                     .setSitemap(title, intentEntries);
+        } else {
+            throw new MenuNotCreatedException();
+        }
+
+    }
+
+    public void provideSimpleStrings(Map<String, String> simpleStrings) {
+
+        if(accessibleMenu != null) {
+            accessibleMenu.getConfiguration()
+                    .getLanguageMenuModule()
+                    .setSimpleStringAlternatives(simpleStrings);
+        } else {
+            throw new MenuNotCreatedException();
+        }
+
+    }
+
+    public void provideGlossary(Map<String, String> definitions) {
+
+        if(accessibleMenu != null) {
+            accessibleMenu.getConfiguration()
+                    .getLanguageMenuModule()
+                    .setDefinitions(definitions);
         } else {
             throw new MenuNotCreatedException();
         }

@@ -6,6 +6,7 @@ import android.content.Context;
 import java.io.Serializable;
 
 import edu.mit.dig.ama.core.menu.services.MenuModule;
+import edu.mit.dig.ama.core.menu.services.language.LanguageMenuModule;
 import edu.mit.dig.ama.core.menu.services.navigation.NavigationMenuModule;
 
 /**
@@ -27,6 +28,7 @@ public class MenuConfig {
     private Context globalContext;
 
     private NavigationMenuModule navigationMenuModule;
+    private LanguageMenuModule languageMenuModule;
 
     /** Constants **/
     private final String USER_PREFS = "ama_user_prefs";
@@ -46,6 +48,7 @@ public class MenuConfig {
         this.globalContext = globalContext;
 
         this.navigationMenuModule = new NavigationMenuModule("App Navigation");
+        this.languageMenuModule = new LanguageMenuModule("Language Options");
 
         //TODO: load pre-existing preferences
     }
@@ -68,6 +71,10 @@ public class MenuConfig {
 
     public NavigationMenuModule getNavigationMenuModule() {
         return this.navigationMenuModule;
+    }
+
+    public LanguageMenuModule getLanguageMenuModule() {
+        return languageMenuModule;
     }
 
     // PARAMETERS AND RULES FOR RETRIEVING AND STORING CONFIGS -----------------

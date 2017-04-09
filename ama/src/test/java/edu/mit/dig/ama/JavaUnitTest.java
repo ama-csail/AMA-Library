@@ -1,6 +1,7 @@
 package edu.mit.dig.ama;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import org.junit.Test;
 
@@ -55,6 +56,12 @@ public class JavaUnitTest {
         assertFalse(String.format("Expected \"%s\" to be inaccessible", string3),
                 AMA.isStringAccessible(string3));
 
+    }
+
+    @Test
+    public void calcLuminanceWhite() {
+        int[] comps = new int[] {1, 255, 255, 255};
+        assertEquals("Luminance of white is 1", 1.0, AMA.calcLuminance(comps), 0.0001);
     }
 
 }

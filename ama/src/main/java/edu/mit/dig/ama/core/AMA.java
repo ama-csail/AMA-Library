@@ -294,7 +294,7 @@ public class AMA {
      * @param colorForeground The color resource in the front of the background
      * @param colorBackground The color resource of the background
      */
-    public static boolean statisfiesContrast(Context context, @ColorRes int colorForeground, @ColorRes int colorBackground) {
+    public static boolean satisfiesContrast(Context context, @ColorRes int colorForeground, @ColorRes int colorBackground) {
         double contrast = getContrast(context, colorForeground, colorBackground);
         return contrast >= 4.5;
     }

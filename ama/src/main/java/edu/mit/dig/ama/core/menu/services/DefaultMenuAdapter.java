@@ -29,6 +29,10 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
     private MenuConfig config;
     private final Map<String, NavigatorContent> content;
 
+    //TODO: Make these global
+    private final String NAV_KEY = "NAVIGATION";
+    private final String EXAMPLE_KEY = "EXAMPLE";
+
     public DefaultMenuAdapter(@NonNull Context context, MenuConfig config, Map<String, NavigatorContent> content) {
 
         this.context = context;
@@ -70,8 +74,18 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
     public View getTabView(int position) {
 
         ImageView icon =  new ImageView(context); // TODO: lol ;)
-        icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_accessibility));
+
+        switch (position) {
+            case 0:
+                icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_accessibility));
+                break;
+            case 1:
+                icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_navigation));
+                break;
+        }
+
         return icon;
+
     }
 
     /**
@@ -81,7 +95,15 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
      */
     @Override
     public NavigatorContent getNavigatorContent(int position) {
-        return content.get(config.getNavigationMenuModule().getSitemapTitle()); // TODO: DON'T DO THIS
+
+        switch (position) {
+            case 0:
+                return content.get(config.getNavigationMenuModule().getSitemapTitle());
+            default:
+                return content.get("EXAMPLE");
+        }
+
+         // TODO: DON'T DO THIS
     }
 
     @Override

@@ -2,10 +2,12 @@ package edu.mit.dig.ama.core.menu.services.navigation;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import edu.mit.dig.ama.R;
 import io.mattcarroll.hover.Navigator;
@@ -27,14 +29,21 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
                 .inflate(R.layout.navigation_menu_module, this, true);
         this.menuModule = menuModule;
 
+        Log.d("MENU", "Creating navigation content");
+
         loadSitemap();
 
     }
 
     public void loadSitemap() {
 
+        Log.d("MENU", "Creating sitemap");
+
+        ((TextView) this.findViewById(R.id.navigation_title)).setText(this.menuModule.getSitemapTitle());
+
         for(final IntentEntry entry : menuModule.getIntentEntries()) {
 
+            Log.d("MENU", "Adding sitemap button for " + entry.getTitle());
             Button button = new Button(this.getContext());
             button.setText(entry.getTitle());
             button.setOnClickListener(new OnClickListener() {

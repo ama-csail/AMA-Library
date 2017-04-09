@@ -13,12 +13,6 @@ import java.util.UUID;
 import edu.mit.dig.ama.core.menu.services.DefaultMenuAdapter;
 import edu.mit.dig.ama.core.menu.services.navigation.NavigationNavigatorContent;
 import io.mattcarroll.hover.NavigatorContent;
-import io.mattcarroll.hover.defaulthovermenu.menus.DoNothingMenuAction;
-import io.mattcarroll.hover.defaulthovermenu.menus.Menu;
-import io.mattcarroll.hover.defaulthovermenu.menus.MenuItem;
-import io.mattcarroll.hover.defaulthovermenu.menus.MenuListNavigatorContent;
-import io.mattcarroll.hover.defaulthovermenu.menus.ShowSubmenuMenuAction;
-import io.mattcarroll.hover.defaulthovermenu.toolbar.ToolbarNavigatorContent;
 import io.mattcarroll.hover.defaulthovermenu.view.ViewHoverMenu;
 
 /**
@@ -70,26 +64,8 @@ public class MenuViewParser {
      */
     public DefaultMenuAdapter buildDefaultMenuAdapter() {
 
-        Menu drillDownMenuLevelTwo = new Menu("Demo Menu - Level 2", Arrays.asList(
-                new MenuItem(UUID.randomUUID().toString(), "Google", new DoNothingMenuAction()),
-                new MenuItem(UUID.randomUUID().toString(), "Amazon", new DoNothingMenuAction())
-        ));
-        ShowSubmenuMenuAction showLevelTwoMenuAction = new ShowSubmenuMenuAction(drillDownMenuLevelTwo);
-
-        Menu drillDownMenu = new Menu("Demo Menu", Arrays.asList(
-                new MenuItem(UUID.randomUUID().toString(), "GPS", new DoNothingMenuAction()),
-                new MenuItem(UUID.randomUUID().toString(), "Cell Tower Triangulation", new DoNothingMenuAction()),
-                new MenuItem(UUID.randomUUID().toString(), "Location Services", showLevelTwoMenuAction)
-        ));
-
-        MenuListNavigatorContent drillDownMenuNavigatorContent = new MenuListNavigatorContent(context, drillDownMenu);
-
-        ToolbarNavigatorContent toolbarNavigatorContent = new ToolbarNavigatorContent(context);
-        toolbarNavigatorContent.pushContent(drillDownMenuNavigatorContent);
-
         Map<String, NavigatorContent> demoMenu = new LinkedHashMap<>();
         demoMenu.put(config.getNavigationMenuModule().getSitemapTitle(), new NavigationNavigatorContent(context, config.getNavigationMenuModule()));
-        demoMenu.put("EXAMPLE", toolbarNavigatorContent);
 
         return new DefaultMenuAdapter(context, config, demoMenu);
     }

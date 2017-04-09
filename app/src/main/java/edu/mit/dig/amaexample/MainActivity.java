@@ -11,7 +11,7 @@ import edu.mit.dig.ama.core.menu.services.navigation.IntentEntry;
  * Main activity for the demo app of Accessibility for Mobile Applications
  *
  * Features of this app:
- *      -
+ *      - WCAG 2.4.5 Satisfied
  *
  * @author Aaron Vontell
  * @author William Caruso

@@ -31,13 +31,9 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
 
         Log.d("MENU", "Creating navigation content");
 
-        loadSitemap();
-
     }
 
     public void loadSitemap() {
-
-        Log.d("MENU", "Creating sitemap");
 
         ((TextView) this.findViewById(R.id.navigation_title)).setText(this.menuModule.getSitemapTitle());
 
@@ -52,7 +48,7 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
                     getContext().startActivity(entry.getIntent());
                 }
             });
-            this.addView(button);
+            ((LinearLayout) this.getChildAt(0)).addView(button);
 
         }
 
@@ -76,7 +72,8 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
      */
     @Override
     public void onShown(@NonNull Navigator navigator) {
-
+        Log.d("MENU", "Showing sitemap");
+        loadSitemap();
     }
 
     /**

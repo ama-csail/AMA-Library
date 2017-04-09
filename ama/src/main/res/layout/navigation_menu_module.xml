@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/navigation_menu_layout">
+    android:id="@+id/navigation_menu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/navigation_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/navigation_title"/>
+        android:background="#ffffff"
+        android:padding="8dp"
+        android:text="TextView"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 </LinearLayout>

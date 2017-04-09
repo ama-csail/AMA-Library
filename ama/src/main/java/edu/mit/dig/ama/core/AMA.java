@@ -332,7 +332,7 @@ public class AMA {
      *              comps[0] = alpha, [1] = red, [2] = green, [3] = blue
      * @return the luminance to be used in contrast calculations
      */
-    private static float calcLuminance(int[] comps) {
+    public static float calcLuminance(int[] comps) {
 
         float RSRGB = comps[1] / 255f;
         float GSRGB = comps[2] / 255f;

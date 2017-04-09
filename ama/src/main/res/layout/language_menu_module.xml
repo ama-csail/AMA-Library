@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/language_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:padding="8dp"
+        android:text="Language Options"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+    <CheckBox
+        android:text="@string/language_module_simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/simple_checkbox"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/language_glossary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Glossary"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+</LinearLayout>

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 import edu.mit.dig.ama.core.menu.services.navigation.IntentEntry;
 
@@ -29,8 +32,9 @@ public class MainActivity extends AccessibleAppCompatActivity {
         Log.d("MENU", "Enabling menu");
         enableMenu(); // Note that you must enabled the menu before configuring
         generateIntentList(); // Provide a sitemap for the menu
+        generateSimpleAlts(); // Provide a list of simple strings
+        generateGlossary(); // Provide a list of glossary terms
         showMenu();
-
 
     }
 
@@ -52,6 +56,28 @@ public class MainActivity extends AccessibleAppCompatActivity {
                 new IntentEntry("Main Activity", new Intent(this, MainActivity.class));
 
         this.giveSitemap("My First Sitemap", thisIntent, otherIntent);
+
+    }
+
+    private void generateSimpleAlts() {
+
+        Map<String, String> simpleMappings = new HashMap<>();
+        simpleMappings.put("complex", "simple");
+        simpleMappings.put("UI", "user interface");
+        simpleMappings.put("quite", "very");
+
+        this.provideSimpleStrings(simpleMappings);
+
+    }
+
+    private void generateGlossary() {
+
+        Map<String, String> definitions = new HashMap<>();
+        definitions.put("Mitochondria", "The powerhouse of the cell");
+        definitions.put("Accessibility", "The quality of being able to be reached or entered (something that Android lacks");
+        definitions.put("Native Mobile", "An application built using libraries provided by the OS creator, rather than a third party service");
+
+        this.provideGlossary(definitions);
 
     }
 

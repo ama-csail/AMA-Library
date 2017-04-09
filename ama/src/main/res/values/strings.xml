@@ -7,4 +7,6 @@
     <string name="orientation_change_landscape">Orientation is now landscape</string>
     <string name="orientation_change_portrait">Orientation is now portrait</string>
 
+    <string name="language_module_simple">Use simple language</string>
+
 </resources>

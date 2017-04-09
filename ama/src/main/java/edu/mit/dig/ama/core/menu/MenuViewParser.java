@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import edu.mit.dig.ama.core.menu.services.DefaultMenuAdapter;
+import edu.mit.dig.ama.core.menu.services.language.LanguageNavigatorContent;
 import edu.mit.dig.ama.core.menu.services.navigation.NavigationNavigatorContent;
 import io.mattcarroll.hover.NavigatorContent;
 import io.mattcarroll.hover.defaulthovermenu.view.ViewHoverMenu;
@@ -66,6 +67,7 @@ public class MenuViewParser {
 
         Map<String, NavigatorContent> demoMenu = new LinkedHashMap<>();
         demoMenu.put(config.getNavigationMenuModule().getSitemapTitle(), new NavigationNavigatorContent(context, config.getNavigationMenuModule()));
+        demoMenu.put("LANGUAGE", new LanguageNavigatorContent(context, config.getLanguageMenuModule()));
 
         return new DefaultMenuAdapter(context, config, demoMenu);
     }

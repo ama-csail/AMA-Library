@@ -100,7 +100,7 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
             case 0:
                 return content.get(config.getNavigationMenuModule().getSitemapTitle());
             default:
-                return content.get("EXAMPLE");
+                return content.get("LANGUAGE");
         }
 
          // TODO: DON'T DO THIS

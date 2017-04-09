@@ -1,5 +1,6 @@
 package edu.mit.dig.ama.core.menu.services.navigation;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -16,7 +17,7 @@ import io.mattcarroll.hover.NavigatorContent;
 /**
  * The accessibility menu module for navigating through the app in an accessible
  * way. Satisfies the following list of WCAG 2.0 requirements:
- *      NONE
+ *      - 2.4.5
  * @author Aaron Vontell
  */
 public class NavigationNavigatorContent extends LinearLayout implements NavigatorContent {
@@ -46,6 +47,7 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
                 @Override
                 public void onClick(View view) {
                     getContext().startActivity(entry.getIntent());
+                    ((Activity) getContext()).finish();
                 }
             });
             ((LinearLayout) this.getChildAt(0)).addView(button);

@@ -1,7 +1,17 @@
 package edu.mit.dig.ama.core;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
+import android.util.Log;
+
+import edu.mit.dig.ama.core.menu.MenuView;
+import edu.mit.dig.ama.core.menu.MenuViewParser;
+import edu.mit.dig.ama.core.menu.services.navigation.IntentEntry;
+import edu.mit.dig.ama.core.util.exceptions.MenuNotCreatedException;
 
 /**
  * An accessible library which provides accessible features which a developer can
@@ -14,6 +24,35 @@ import android.content.res.Configuration;
 public class AccessibleAppCompatActivity extends Activity {
 
     private boolean orientationChangedListenerEnabled;
+    private MenuView accessibleMenu;
+
+    /**
+     * Enable the accessibility menu for this activity (note that this enables
+     * any settings configured by the user within the activity)
+     */
+    public void enableMenu() {
+        if(accessibleMenu == null) {
+            Log.d("MENU", "Getting menu");
+            accessibleMenu = MenuView.getMenu(this.getApplicationContext());
+        }
+        accessibleMenu.setEnabled(true);
+    }
+
+    /**
+     * Disable the accessibility menu for this activity (note that this disables
+     * any settings configured by the user within the activity)
+     */
+    public void disableMenu() {
+        if(accessibleMenu == null) {
+            accessibleMenu = MenuView.getMenu(this.getApplicationContext());
+        }
+        accessibleMenu.setEnabled(false);
+    }
+
+    public void showMenu() {
+        MenuViewParser viewParser = new MenuViewParser(this, accessibleMenu.getConfiguration());
+        viewParser.prepareMenu();
+    }
 
     /**
      * Enables the orientation changed listener for this activity
@@ -47,6 +86,56 @@ public class AccessibleAppCompatActivity extends Activity {
 
             }
 
+        }
+
+    }
+
+    /** code to post/handler request for permission */
+    public final static int REQUEST_CODE = -1010101;
+
+    public void checkDrawOverlayPermission() {
+        /** check if we already  have permission to draw over other apps */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                /** if not construct intent to request permission */
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                /** request permission via start activity for result */
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
+        /** check if received result code
+         is equal our requested code for draw permission  */
+        if (requestCode == REQUEST_CODE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
+                    // continue here - permission was granted
+                    MenuViewParser viewParser = new MenuViewParser(this, null);
+                    viewParser.prepareMenu();
+                }
+            }
+        }
+    }
+
+    // MODULE - SPECIFIC BINDINGS FOR THE MENU CONFIGURATION -------------------
+
+    /**
+     * Provides a sitemap to the navigation module of the accessibility menu
+     * @param title The title to display
+     * @param intentEntries
+     */
+    public void giveSitemap(String title, IntentEntry... intentEntries) {
+
+        if(accessibleMenu != null) {
+            accessibleMenu.getConfiguration()
+                    .getNavigationMenuModule()
+                    .setSitemap(title, intentEntries);
+        } else {
+            throw new MenuNotCreatedException();
         }
 
     }

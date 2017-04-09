@@ -10,16 +10,20 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -359,13 +363,55 @@ public class AMA {
     }
 
     /**
-     * Get the current available input methods from the input field
-     * @param view the view to check upon
+     * Get the current available input methods
      * @param activity the Activity for specific input field
+     * @return list of string representing different types of input methods
      */
-    public static void getInputMethodsInInputFields(View view, Activity activity) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static String[] getAvailableInputMethods(Activity activity) {
+        String enabledMethods = Settings.Secure.getString(activity.getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS);
+        return enabledMethods.split(":");
+    }
+
+    /**
+     * Check if the voice typing is enabled for the phone
+     * @param enabledMethods list of string representing enabled methods
+     * @return boolean representing whether voice typing is enabled or not
+     */
+    public static boolean isVoiceTypingEnabled(String[] enabledMethods) {
+        for (String method: enabledMethods) {
+            if (method.contains("VoiceInputMethod")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get all the text input fields from the view.
+     * @param activity the Activity for specific input field
+     * @return list of text input fields existing on all views
+     */
+    public static List<View> getAllTextInputFields(Activity activity) {
+        List<View> views = getAllViews(activity);
+        List<View> inputFields = new ArrayList<>();
+        for (View view: views) {
+            if (view instanceof EditText) {
+                inputFields.add(view);
+            }
+        }
+        return inputFields;
+    }
+
+    /**
+     * Get the default input method for the activity
+     * @param activity current activity
+     * @return String representing the default input method
+     */
+    public static String getDefaultInputMethod(Activity activity) {
+        //activity.getApplicationContext()
+        String id;
+        id = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+        return id;
     }
 
     /**
@@ -480,6 +526,34 @@ public class AMA {
         throw new RuntimeException("Method not implemented");
     }
 
+
+    /**
+     * Simulates a touch gesture at a specific location on a view
+     * @param view The view to touch
+     * @param x The x-coordinate of the touch
+     * @param y The y-coordinate of the touch
+     */
+    public static void simulateTouchGesture(View view, float x, float y) {
+        // Obtain MotionEvent object
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis() + 100;
+        // List of meta states found here:
+        // developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
+        int metaState = 0;
+        MotionEvent motionEvent = MotionEvent.obtain(
+                downTime,
+                eventTime,
+                MotionEvent.ACTION_UP,
+                x,
+                y,
+                metaState
+        );
+
+        // Dispatch touch event to view
+        view.dispatchTouchEvent(motionEvent);
+    }
+
+
     /**
      * Sets the input time for a View
      * @param view The View to set
@@ -557,23 +631,24 @@ public class AMA {
     //----------------------------------------------------------------------------------------------
 
     /**
-     * Sets the HelpMessage of a View
+     * Sets the HelpMessage of a View (essentially a piece of information
+     * which can be used in other operations)
      * @param view The view to set the helpMessage on
      * @param helpMessage The string to set
      */
     public static void setHelpMessage(View view, String helpMessage) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+        view.setTag(Util.HELP_MESSAGE_KEY, helpMessage);
     }
 
     /**
-     * Gets the HelpMessage of a View
+     * Gets the HelpMessage of a View (the piece of information set by
+     * <code>setHelpMessage()</code>)
      * @param view The view to get the HelpMessage on
-     * @return The String HelpMessage of the view
+     * @return The String HelpMessage of the view, or null if it does not exist
      */
     public static String getHelpMessage(View view) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+        Object help = view.getTag(Util.HELP_MESSAGE_KEY);
+        return (help == null ? null : (String) help);
     }
 
     /**
@@ -807,7 +882,7 @@ public class AMA {
      * Gets action feedback for a View
      * @param view The view to get the feedbackMessage from
      */
-    public static void getFeedbackMessage(View view){
+    public static void getFeedbackMessage(View view) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }
@@ -817,7 +892,7 @@ public class AMA {
      * @param paragraph The String to break down
      * @return bulleted version of paragraph
      */
-    public static String getBullettedString(String paragraph){
+    public static String getBullettedString(String paragraph) {
         //TODO
         throw new RuntimeException("Method not implemented");
     }

@@ -57,24 +57,4 @@ public class JavaUnitTest {
 
     }
 
-    /**
-     * Tests that a series of inaccessible strings are indeed inaccessible as
-     * defined by <code>AMA.isStringAccessible()</code>
-     */
-    @Test
-    public void isStringAccessibleFalse() {
-
-        String string1 = "˙¨øø∫√∂å´¥∫ˆ˜®≈´ should not be accessible";
-        String string2 = null;
-        String string3 = "";
-
-        assertFalse(String.format("Expected \"%s\" to be inaccessible", string1),
-                AMA.isStringAccessible(string1));
-        assertFalse(String.format("Expected \"%s\" to be inaccessible", string2),
-                AMA.isStringAccessible(string2));
-        assertFalse(String.format("Expected \"%s\" to be inaccessible", string3),
-                AMA.isStringAccessible(string3));
-
-    }
-
 }

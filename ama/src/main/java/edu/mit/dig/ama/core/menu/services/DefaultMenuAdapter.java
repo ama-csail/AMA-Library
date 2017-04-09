@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.mit.dig.ama.R;
 import edu.mit.dig.ama.core.menu.MenuConfig;
 import edu.mit.dig.ama.core.menu.services.navigation.NavigationNavigatorContent;
 import io.mattcarroll.hover.HoverMenuAdapter;
@@ -67,8 +69,9 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
     @Override
     public View getTabView(int position) {
 
-        return new Button(context); // TODO: lol
-
+        ImageView icon =  new ImageView(context); // TODO: lol ;)
+        icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_accessibility));
+        return icon;
     }
 
     /**

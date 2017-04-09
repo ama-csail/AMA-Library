@@ -27,16 +27,11 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
     private MenuConfig config;
     private final Map<String, NavigatorContent> content;
 
-    /** Constants for references **/
-    private final String NAVIGATOR = "NAVIGATOR";
-
-    public DefaultMenuAdapter(@NonNull Context context, MenuConfig config) {
+    public DefaultMenuAdapter(@NonNull Context context, MenuConfig config, Map<String, NavigatorContent> content) {
 
         this.context = context;
         this.config = config;
-
-        this.content = new HashMap<>();
-        content.put(NAVIGATOR, new NavigationNavigatorContent(context, config.getNavigationMenuModule()));
+        this.content = content;
 
     }
 
@@ -83,7 +78,7 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
      */
     @Override
     public NavigatorContent getNavigatorContent(int position) {
-        return content.get(NAVIGATOR); // TODO: Not generalized
+        return content.get(config.getNavigationMenuModule().getSitemapTitle()); // TODO: DON'T DO THIS
     }
 
     @Override

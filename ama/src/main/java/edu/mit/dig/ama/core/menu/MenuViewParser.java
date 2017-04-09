@@ -1,14 +1,17 @@
 package edu.mit.dig.ama.core.menu;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import edu.mit.dig.ama.core.menu.services.DefaultMenuAdapter;
-import io.mattcarroll.hover.HoverMenu;
-import io.mattcarroll.hover.Navigator;
+import edu.mit.dig.ama.core.menu.services.navigation.NavigationNavigatorContent;
 import io.mattcarroll.hover.NavigatorContent;
-import io.mattcarroll.hover.defaulthovermenu.HoverMenuBuilder;
+import io.mattcarroll.hover.defaulthovermenu.view.ViewHoverMenu;
 
 /**
  * This class takes the parameters from the MenuConfig, and displays the
@@ -19,7 +22,7 @@ public class MenuViewParser {
 
     private MenuConfig config;
     private Context context;
-    private HoverMenu hoverMenu;
+    private ViewHoverMenu viewHoverMenu;
 
     /**
      * Creates the menu view parser which will create an actual hover menu
@@ -38,45 +41,18 @@ public class MenuViewParser {
      */
     public void prepareMenu() {
 
-        // Build an adapter for the views
-        DefaultMenuAdapter adapter = buildDefaultMenuAdapter();
-        Navigator navigator = getMenuNavigator();
-
-        // Build a HoverMenu.
-        this.hoverMenu = new HoverMenuBuilder(context)
-                .displayWithinWindow()
-                .useNavigator(navigator)
-                .useAdapter(adapter)
-                .build();
-
-        //hoverMenu.show();
-        //hoverMenu.expandMenu();
-
-    }
-
-    public Navigator getMenuNavigator() {
-        return new Navigator() {
-            @Override
-            public void pushContent(@NonNull NavigatorContent content) {
-
+        // TODO: How should we do this?
+        if(context instanceof Activity) {
+            ViewHoverMenu hoverMenu = new ViewHoverMenu(context);
+            View content = ((Activity) context).findViewById(android.R.id.content);
+            if(content instanceof ViewGroup) {
+                //TODO: if not viewgroup, wrap in one?
+                ((ViewGroup) content).addView(hoverMenu);
+                hoverMenu.setAdapter(buildDefaultMenuAdapter());
+                this.viewHoverMenu = hoverMenu;
             }
+        }
 
-            @Override
-            public boolean popContent() {
-                return false;
-            }
-
-            @Override
-            public void clearContent() {
-
-            }
-
-            @NonNull
-            @Override
-            public View getView() {
-                return null;
-            }
-        };
     }
 
     /**
@@ -85,7 +61,11 @@ public class MenuViewParser {
      * @return The default menu adapter for this menu
      */
     public DefaultMenuAdapter buildDefaultMenuAdapter() {
-        return new DefaultMenuAdapter(context, config);
+
+        Map<String, NavigatorContent> demoMenu = new LinkedHashMap<>();
+        demoMenu.put(config.getNavigationMenuModule().getSitemapTitle(), new NavigationNavigatorContent(context, config.getNavigationMenuModule()));
+
+        return new DefaultMenuAdapter(context, config, demoMenu);
     }
 
 }

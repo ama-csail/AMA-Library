@@ -2,6 +2,8 @@ package edu.mit.dig.amaexample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import edu.mit.dig.ama.core.AccessibleAppCompatActivity;
 import edu.mit.dig.ama.core.menu.services.navigation.IntentEntry;
 
@@ -24,16 +26,17 @@ public class MainActivity extends AccessibleAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        Log.d("MENU", "Enabling menu");
         enableMenu(); // Note that you must enabled the menu before configuring
         generateIntentList(); // Provide a sitemap for the menu
+        showMenu();
 
 
     }
 
     @Override
     protected void onResume() {
-
+        super.onResume();
 
     }
 

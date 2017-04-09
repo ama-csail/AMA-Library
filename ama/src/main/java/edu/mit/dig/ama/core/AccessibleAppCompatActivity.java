@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.Log;
 
 import edu.mit.dig.ama.core.menu.MenuView;
 import edu.mit.dig.ama.core.menu.MenuViewParser;
@@ -31,6 +32,7 @@ public class AccessibleAppCompatActivity extends Activity {
      */
     public void enableMenu() {
         if(accessibleMenu == null) {
+            Log.d("MENU", "Getting menu");
             accessibleMenu = MenuView.getMenu(this.getApplicationContext());
         }
         accessibleMenu.setEnabled(true);
@@ -45,6 +47,11 @@ public class AccessibleAppCompatActivity extends Activity {
             accessibleMenu = MenuView.getMenu(this.getApplicationContext());
         }
         accessibleMenu.setEnabled(false);
+    }
+
+    public void showMenu() {
+        MenuViewParser viewParser = new MenuViewParser(this, accessibleMenu.getConfiguration());
+        viewParser.prepareMenu();
     }
 
     /**

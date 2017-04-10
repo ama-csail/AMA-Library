@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.TextView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +53,18 @@ public class ExampleInstrumentedTest {
         View view = new View(appContext);
 
         assertEquals(ActionClass.DEFAULT, AMA.getActionClass(view));
+    }
+
+    @Test
+    public void testSetFont() {
+        TextView textView = new TextView(appContext);
+
+        View[] views = new View[]{textView};
+        AMA.setFont((float) 10.0, views);
+
+        DisplayMetrics metrics = appContext.getResources().getDisplayMetrics();
+        float actualTextSize = textView.getTextSize()/metrics.density;
+        assertTrue(actualTextSize == 10.0);
     }
 
 

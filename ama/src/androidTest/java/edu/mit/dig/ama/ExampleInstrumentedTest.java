@@ -1,11 +1,16 @@
 package edu.mit.dig.ama;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import edu.mit.dig.ama.core.AMA;
+import edu.mit.dig.ama.core.ActionClass;
 
 import static org.junit.Assert.*;
 
@@ -16,11 +21,37 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    private Context appContext = InstrumentationRegistry.getTargetContext();
+
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
         assertEquals("edu.mit.dig.ama.test", appContext.getPackageName());
     }
+
+    @Test
+    public void testSetGetHelpMessageTrue() {
+        View view = new View(appContext);
+        AMA.setHelpMessage(view, "this is top view");
+
+        assertEquals("this is top view", AMA.getHelpMessage(view));
+    }
+
+    @Test
+    public void testSetGetHelpMessageFalse() {
+        View view = new View(appContext);
+        AMA.setHelpMessage(view, "this is top view");
+        assertEquals("this is top view", AMA.getHelpMessage(view));
+
+        AMA.setHelpMessage(view, "this is not a top view");
+        assertNotEquals("this is top view", AMA.getHelpMessage(view));
+    }
+
+    @Test
+    public void testGetActionClassDefault() {
+        View view = new View(appContext);
+
+        assertEquals(ActionClass.DEFAULT, AMA.getActionClass(view));
+    }
+
+
 }

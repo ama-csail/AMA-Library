@@ -34,6 +34,9 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
 
     }
 
+    /**
+     * Loads the sitemap that has been set by the developer, if entries are given
+     */
     public void loadSitemap() {
 
         ((TextView) this.findViewById(R.id.navigation_title)).setText(this.menuModule.getSitemapTitle());

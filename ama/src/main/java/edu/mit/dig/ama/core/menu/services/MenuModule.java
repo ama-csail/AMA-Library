@@ -23,4 +23,12 @@ public interface MenuModule {
      */
     void setEnabled(boolean enabled);
 
+    /**
+     * Returns the title for this module, or essentially the first text view's
+     * text within the layout for this module
+     * NOTE: This must be unique! It is used as an identifier for the HoverMenu
+     * @return the title of this module
+     */
+    String getTitle();
+
 }

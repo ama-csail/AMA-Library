@@ -94,9 +94,9 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
 
         switch (position) {
             case 0:
-                return content.get(config.getNavigationMenuModule().getSitemapTitle());
+                return content.get(config.getNavigationMenuModule().getTitle());
             default:
-                return content.get("LANGUAGE");
+                return content.get(config.getLanguageMenuModule().getTitle());
         }
 
          // TODO: DON'T DO THIS

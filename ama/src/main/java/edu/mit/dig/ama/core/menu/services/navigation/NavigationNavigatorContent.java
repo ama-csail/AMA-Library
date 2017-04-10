@@ -31,6 +31,7 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
         this.menuModule = menuModule;
 
         Log.d("MENU", "Creating navigation content");
+        loadSitemap();
 
     }
 
@@ -77,8 +78,7 @@ public class NavigationNavigatorContent extends LinearLayout implements Navigato
      */
     @Override
     public void onShown(@NonNull Navigator navigator) {
-        Log.d("MENU", "Showing sitemap");
-        loadSitemap();
+
     }
 
     /**

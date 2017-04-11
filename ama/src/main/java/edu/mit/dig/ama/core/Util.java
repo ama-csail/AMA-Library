@@ -11,5 +11,6 @@ package edu.mit.dig.ama.core;
 public class Util {
 
     static final int HELP_MESSAGE_KEY = "AMA_HELP_MESSAGE_KEY".hashCode();
+    static final int FEEDBACK_MESSAGE_KEY = "AMA_FEEDBACK_MESSAGE_KEY".hashCode();
 
 }

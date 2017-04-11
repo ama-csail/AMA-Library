@@ -874,17 +874,16 @@ public class AMA {
      * @param feedbackMessage String to set
      */
     public static void setFeedbackMessage(View view, String feedbackMessage) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+        view.setTag(Util.FEEDBACK_MESSAGE_KEY, feedbackMessage);
     }
 
     /**
      * Gets action feedback for a View
      * @param view The view to get the feedbackMessage from
      */
-    public static void getFeedbackMessage(View view) {
-        //TODO
-        throw new RuntimeException("Method not implemented");
+    public static String getFeedbackMessage(View view) {
+        Object feedback = view.getTag(Util.FEEDBACK_MESSAGE_KEY);
+        return (feedback == null ? null : (String) feedback);
     }
 
     /**

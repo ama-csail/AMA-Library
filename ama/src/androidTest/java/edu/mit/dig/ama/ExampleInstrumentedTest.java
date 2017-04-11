@@ -56,6 +56,15 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
+    public void testSetActionClass() {
+
+        View view = new View(appContext);
+        AMA.setActionClass((Activity) appContext, view, ActionClass.SUCCESS);
+        assertEquals("Button should have SUCCESS class", AMA.getActionClass(view), ActionClass.SUCCESS);
+
+    }
+
+    @Test
     public void testSetFont() {
         TextView textView = new TextView(appContext);
 

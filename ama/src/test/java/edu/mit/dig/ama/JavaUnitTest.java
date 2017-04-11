@@ -58,10 +58,41 @@ public class JavaUnitTest {
 
     }
 
+    /**
+     * Tests that the luminance of white is 1
+     */
     @Test
     public void calcLuminanceWhite() {
         int[] comps = new int[] {1, 255, 255, 255};
         assertEquals("Luminance of white is 1", 1.0, AMA.calcLuminance(comps), 0.0001);
     }
+
+    /**
+     * Tests that the luminance of black is 0
+     */
+    @Test
+    public void calcLuminanceBlack() {
+        int[] comps = new int[] {1, 0, 0, 0};
+        assertEquals("Luminance of black is 0", 0, AMA.calcLuminance(comps), 0.0001);
+    }
+
+    /**
+     * Tests if VoiceInputMethod package name is enabled
+     */
+    @Test
+    public void testVoiceTypingEnabled() {
+        String[] packs = new String[] {"VoiceInputMethod"};
+        assertTrue("Expect package to be enabled", AMA.isVoiceTypingEnabled(packs));
+    }
+
+    /**
+     * Tests if VoiceInputMethod package name is not enabled
+     */
+    @Test
+    public void testVoiceTypingNotEnabled() {
+        String[] packs = new String[] {"Nope4"};
+        assertFalse("Expect package to not be enabled", AMA.isVoiceTypingEnabled(packs));
+    }
+
 
 }

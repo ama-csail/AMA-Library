@@ -38,6 +38,11 @@ public class LanguageNavigatorContent extends LinearLayout implements NavigatorC
 
     }
 
+    /**
+     * Causes the checkbox within the language module to toggle simple strings
+     * within the application, given by the mapping of complex strings to simple
+     * strings
+     */
     private void prepareSimpleStringToggle() {
 
         CheckBox simpleBox = (CheckBox) this.findViewById(R.id.simple_checkbox);
@@ -59,6 +64,10 @@ public class LanguageNavigatorContent extends LinearLayout implements NavigatorC
 
     }
 
+    /**
+     * Iterates through the list of terms given by the developer, and displays
+     * the term and its definition within the glossary
+     */
     private void showGlossary() {
 
         for(String word : menuModule.getDefinitions().keySet()) {

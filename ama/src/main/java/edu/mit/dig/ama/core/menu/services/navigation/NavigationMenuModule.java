@@ -10,15 +10,18 @@ import edu.mit.dig.ama.core.menu.services.MenuModule;
 public class NavigationMenuModule implements MenuModule {
 
     /** Entire module settings **/
-    private String title;
+    private final String TITLE = "Navigation";
     private boolean enabled;
 
     /** Parts of the module **/
     private String sitemapTitle;
     private IntentEntry[] intentEntries;
 
-    public NavigationMenuModule(String title) {
-        this.title = title;
+    /**
+     * Creates a basic navigation module for the accessible menu
+     */
+    public NavigationMenuModule() {
+
     }
 
     @Override
@@ -31,8 +34,11 @@ public class NavigationMenuModule implements MenuModule {
         return this.enabled;
     }
 
+    @Override
+    public String getTitle() {return TITLE;}
+
     /**
-     * Sets the information for the sitemap
+     * Sets the title and list of entries for the app sitemap
      * @param sitemapTitle The title for the sitemap section
      * @param intentEntries The entries for the sitemap section
      */
@@ -41,10 +47,19 @@ public class NavigationMenuModule implements MenuModule {
         this.intentEntries = intentEntries;
     }
 
+    /**
+     * Returns the title of the sitemap
+     * @return the title of the sitemap
+     */
     public String getSitemapTitle() {
         return sitemapTitle;
     }
 
+    /**
+     * Returns the array of intent entries, or accessible activities and
+     * sections of the application
+     * @return the intents to display within the accessible menu's sitemap
+     */
     public IntentEntry[] getIntentEntries() {
         return intentEntries;
     }

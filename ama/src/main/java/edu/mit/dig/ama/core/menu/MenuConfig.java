@@ -47,8 +47,9 @@ public class MenuConfig {
 
         this.globalContext = globalContext;
 
-        this.navigationMenuModule = new NavigationMenuModule("App Navigation");
-        this.languageMenuModule = new LanguageMenuModule("Language Options");
+        // Create an instance of each module, with default titles
+        this.navigationMenuModule = new NavigationMenuModule();
+        this.languageMenuModule = new LanguageMenuModule();
 
         //TODO: load pre-existing preferences
     }
@@ -69,10 +70,20 @@ public class MenuConfig {
         this.enabled = enabled;
     }
 
+    /**
+     * Returns the navigation module which holds information and logic regarding
+     * the navigation for the accessible menu
+     * @return the navigation menu module being used by the accessible menu
+     */
     public NavigationMenuModule getNavigationMenuModule() {
         return this.navigationMenuModule;
     }
 
+    /**
+     * Returns the language module which holds information and logic regarding
+     * language for the accessible menu
+     * @return the language menu module being used by the accessible menu
+     */
     public LanguageMenuModule getLanguageMenuModule() {
         return languageMenuModule;
     }

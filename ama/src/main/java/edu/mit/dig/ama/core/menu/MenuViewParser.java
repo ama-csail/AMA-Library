@@ -66,8 +66,8 @@ public class MenuViewParser {
     public DefaultMenuAdapter buildDefaultMenuAdapter() {
 
         Map<String, NavigatorContent> demoMenu = new LinkedHashMap<>();
-        demoMenu.put(config.getNavigationMenuModule().getSitemapTitle(), new NavigationNavigatorContent(context, config.getNavigationMenuModule()));
-        demoMenu.put("LANGUAGE", new LanguageNavigatorContent(context, config.getLanguageMenuModule()));
+        demoMenu.put(config.getNavigationMenuModule().getTitle(), new NavigationNavigatorContent(context, config.getNavigationMenuModule()));
+        demoMenu.put(config.getLanguageMenuModule().getTitle(), new LanguageNavigatorContent(context, config.getLanguageMenuModule()));
 
         return new DefaultMenuAdapter(context, config, demoMenu);
     }

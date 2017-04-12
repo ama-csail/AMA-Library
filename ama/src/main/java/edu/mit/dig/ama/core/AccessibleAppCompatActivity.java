@@ -51,6 +51,9 @@ public class AccessibleAppCompatActivity extends Activity {
         accessibleMenu.setEnabled(false);
     }
 
+    /**
+     * Begins displaying the menu to the user
+     */
     public void showMenu() {
         MenuViewParser viewParser = new MenuViewParser(this, accessibleMenu.getConfiguration());
         viewParser.prepareMenu();
@@ -123,12 +126,18 @@ public class AccessibleAppCompatActivity extends Activity {
         }
     }
 
-    // MODULE - SPECIFIC BINDINGS FOR THE MENU CONFIGURATION -------------------
+    // -------------------------------------------------------------------------
+    // MODULE - SPECIFIC BINDINGS FOR THE MENU CONFIGURATION
+    // If you are developing our own module for the accessibility menu, here is
+    // where you should add methods to make modifications to the MenuCongfig
+    // As always, you should make sure that the menu has been created before
+    // modifying it, as some users may have the menu disabled.
 
     /**
      * Provides a sitemap to the navigation module of the accessibility menu
-     * @param title The title to display
-     * @param intentEntries
+     * @param title The title to display within for sitemap section
+     * @param intentEntries The list of entries to be included within the
+     *                      sitemap
      */
     public void giveSitemap(String title, IntentEntry... intentEntries) {
 
@@ -142,6 +151,12 @@ public class AccessibleAppCompatActivity extends Activity {
 
     }
 
+    /**
+     * Gives the accessibility menu a mapping of complex strings to simpler
+     * strings, which can be displayed through the language module for users
+     * who have cognitive disabilities.
+     * @param simpleStrings the mapping from complex strings to simple strings
+     */
     public void provideSimpleStrings(Map<String, String> simpleStrings) {
 
         if(accessibleMenu != null) {
@@ -154,6 +169,13 @@ public class AccessibleAppCompatActivity extends Activity {
 
     }
 
+    /**
+     * Gives the accessibility a mapping of words to definitions, which will be
+     * displayed in the glossary sections of the language module. This is useful
+     * for those who may have cognitive disabilities, and need further
+     * instruction
+     * @param definitions the mapping of words to definitions
+     */
     public void provideGlossary(Map<String, String> definitions) {
 
         if(accessibleMenu != null) {

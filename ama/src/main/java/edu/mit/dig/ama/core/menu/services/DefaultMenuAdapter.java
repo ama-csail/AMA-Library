@@ -29,10 +29,6 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
     private MenuConfig config;
     private final Map<String, NavigatorContent> content;
 
-    //TODO: Make these global
-    private final String NAV_KEY = "NAVIGATION";
-    private final String EXAMPLE_KEY = "EXAMPLE";
-
     public DefaultMenuAdapter(@NonNull Context context, MenuConfig config, Map<String, NavigatorContent> content) {
 
         this.context = context;
@@ -98,9 +94,9 @@ public class DefaultMenuAdapter implements HoverMenuAdapter {
 
         switch (position) {
             case 0:
-                return content.get(config.getNavigationMenuModule().getSitemapTitle());
+                return content.get(config.getNavigationMenuModule().getTitle());
             default:
-                return content.get("LANGUAGE");
+                return content.get(config.getLanguageMenuModule().getTitle());
         }
 
          // TODO: DON'T DO THIS

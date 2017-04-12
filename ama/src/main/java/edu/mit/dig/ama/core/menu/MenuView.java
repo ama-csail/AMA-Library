@@ -39,9 +39,7 @@ public class MenuView {
      * Creates a singleton MenuView for the given context
      */
     private MenuView(Context context) {
-
         this.configuration = new MenuConfig(context);
-
     }
 
     /**

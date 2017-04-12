@@ -13,15 +13,15 @@ import edu.mit.dig.ama.core.menu.services.MenuModule;
 public class LanguageMenuModule implements MenuModule {
 
     /** Entire module settings **/
-    private String title;
+    private final String TITLE = "Language Options";
     private boolean enabled;
 
     /** Parts of the module **/
     private Map<String, String> simpleAlts;
     private Map<String, String> definitions;
 
-    public LanguageMenuModule(String title) {
-        this.title = title;
+    public LanguageMenuModule() {
+
     }
 
     @Override
@@ -34,18 +34,39 @@ public class LanguageMenuModule implements MenuModule {
         return this.enabled;
     }
 
+    @Override
+    public String getTitle() {return TITLE;}
+
+    /**
+     * Returns the mapping of complex strings to simpler strings
+     * @return the mapping of complex strings to simpler strings
+     */
     public Map<String, String> getSimpleAlts() {
         return simpleAlts;
     }
 
+    /**
+     * Sets the mapping of complex strings to simpler strings
+     * @param simpleAlts the mapping of complex strings to simpler strings
+     */
     public void setSimpleStringAlternatives(Map<String, String> simpleAlts) {
         this.simpleAlts = simpleAlts;
     }
 
+    /**
+     * Returns the glossary of terms and definitions to be used within the menu
+     * glossary
+     * @return the glossary of terms and definitions
+     */
     public Map<String, String> getDefinitions() {
         return definitions;
     }
 
+    /**
+     * Returns the glossary of terms and definitions to be used within the menu
+     * glossary
+     * @param definitions the mapping of terms to definitions
+     */
     public void setDefinitions(Map<String, String> definitions) {
         this.definitions = definitions;
     }
